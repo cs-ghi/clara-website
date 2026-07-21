@@ -38,9 +38,9 @@
     justify-content:space-between;
     align-items:center;
     padding:1.7rem 3.2rem;
-    pointer-events:none; /* let corner hotspots underneath receive hover; links re-enable below */
+    position:relative;
+    z-index:5;
   }
-  nav a{ pointer-events:auto; }
   .nav-title{
     font-family:'Space Mono',monospace;
     font-weight:700;
@@ -345,23 +345,29 @@
     position:fixed;
     width:90px;
     height:90px;
-    z-index:5;
+    z-index:6;
     opacity:0.55;
-    pointer-events:auto;
+    pointer-events:none;
     transition:opacity 0.3s ease;
   }
+  .frame-corner .corner-deco{ pointer-events:auto; }
   .frame-corner.tl{ top:22px; left:22px; }
   .frame-corner.tr{ top:22px; right:22px; transform:scaleX(-1); }
   .frame-corner.bl{ bottom:22px; left:22px; transform:scaleY(-1); }
   .frame-corner.br{ bottom:22px; right:22px; transform:scale(-1,-1); }
 
-  /* pattern stays hidden until its corner is hovered */
+  /* pattern stays hidden until you hover directly over the dot grid itself */
   .corner-pattern{
     opacity:0;
     transition:opacity 0.4s ease;
+    pointer-events:none;
+  }
+  .corner-hover-zone{
+    fill:transparent;
+    pointer-events:all;
   }
   .frame-corner:hover{ opacity:0.85; }
-  .frame-corner:hover .corner-pattern{ opacity:0.55; }
+  .corner-hover-zone:hover ~ .corner-pattern{ opacity:0.55; }
 
   /* ---- hidden ceramic pattern, revealed in a spotlight around the cursor ----
      Uses an inline SVG tile (no external image dependency) styled to match
@@ -391,13 +397,6 @@
      into place), so that markup lives once here as a <symbol> and is
      instanced via <use>. Only the little leaf differs per corner, so
      each corner keeps its own leaf <g> with its own transform. -->
-<!-- The bracket+flower symbol below has NO viewBox: a <symbol> with its own
-     viewBox establishes a separate local coordinate system that clips to
-     that box BEFORE any transform on the <use> is applied, which is what
-     silently clipped the leaf's negative-coordinate path earlier. Without
-     a viewBox, the symbol's content lives directly in the parent's
-     coordinate space, so <use> transforms behave exactly like the
-     original inline markup did. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="corner-bracket-flower">
@@ -435,24 +434,28 @@
 </svg>
 
 <svg class="frame-corner tl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
   <use href="#corner-pattern" class="corner-pattern"/>
-  <use href="#corner-bracket-flower"/>
-  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <!-- <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
 </svg>
 <svg class="frame-corner tr" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
   <use href="#corner-pattern" class="corner-pattern"/>
-  <use href="#corner-bracket-flower"/>
-  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <!-- <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
 </svg>
 <svg class="frame-corner bl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
   <use href="#corner-pattern" class="corner-pattern"/>
-  <use href="#corner-bracket-flower"/>
-  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <!-- <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
 </svg>
 <svg class="frame-corner br" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
   <use href="#corner-pattern" class="corner-pattern"/>
-  <use href="#corner-bracket-flower"/>
-  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125)"/> -->
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <!-- <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125)"/> -->
 </svg>
 
 <nav>
