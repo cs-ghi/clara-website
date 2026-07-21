@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clara Silwal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ============ EDIT THESE TO RESTYLE THE WHOLE PAGE ============ */
+  :root{
+    --porcelain:#FBFDFF;   /* page background */
+    --cobalt:#1B4B8F;      /* links / accents */
+    --cobalt-deep:#0E2C58; /* headings */
+    --line-soft:#DCE7F5;   /* underline / divider color */
+    --mute:#5C7093;        /* body text */
+    --accent:#2E7BE0;      /* hover / highlight color */
+
+    --content-width: 480px;  /* controls line length of all intro text */
+    --section-gap: 1.1em;    /* spacing between paragraphs */
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--porcelain);
+    color:var(--cobalt-deep);
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    font-size:15px;
+    min-height:100vh;
+  }
+
+  /* ============ NAV ============ */
+  nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1.7rem 3.2rem;
+    pointer-events:none; /* let corner hotspots underneath receive hover; links re-enable below */
+  }
+  nav a{ pointer-events:auto; }
+  .nav-title{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.06em;
+  }
+  .nav-links a{
+    color:var(--mute);
+    text-decoration:none;
+    margin-left:2rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    transition:color 0.2s ease;
+  }
+  .nav-links a.active,
+  .nav-links a:hover{ color:var(--accent); }
+
+  /* ============ INTRO / HERO ============
+     Everything below is centered as ONE column, so the heading,
+     subtitle, and body paragraphs all share the same center line. */
+  .entrance{
+    max-width:var(--content-width);
+    margin:0 auto;
+    padding:6rem 2rem 8rem;
+    text-align:center;
+    background:var(--porcelain);
+  }
+
+  .room-label{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5em;
+    font-family:'Space Mono',monospace;
+    font-size:0.66rem;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:1.3rem;
+  }
+  .room-label::before,
+  .room-label::after{
+    content:'';
+    width:14px;
+    height:1px;
+    background:var(--accent);
+    opacity:0.5;
+  }
+
+  /* Name + subtitle, centered so they align with the "Welcome" label above. */
+  .title-block{
+    display:inline-block;
+    text-align:center;
+  }
+
+  h1.display{
+    font-family:'Fraunces',serif;
+    font-weight:400;
+    font-size:2.6rem;
+    line-height:1.15;
+    margin-bottom:0.6rem;
+  }
+
+  .subtitle{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    color:var(--mute);
+    font-size:0.9rem;
+    margin-bottom:2rem;
+  }
+
+  p.subtitle{
+  margin:0 auto 2rem;}
+
+  .entrance p{
+    color:var(--mute);
+    font-size:0.86rem;
+    line-height:1.8;
+    font-weight:300;
+    max-width:340px;   /* shorter than heading/subtitle so the shift reads intentional */
+  }
+  .entrance p + p{ margin-top:var(--section-gap); }
+
+  /* Alternating alignment for body paragraphs only (not heading/subtitle).
+     Apply .align-left / .align-right to each <p> in the order you want. */
+  .entrance p.align-left{ text-align:left; margin-right:auto; margin-left:0; }
+  .entrance p.align-right{ text-align:right; margin-left:auto; margin-right:0; }
+
+  .published-line{
+    font-family:'Space Mono',monospace;
+    font-size:0.72rem !important;
+    color:var(--cobalt) !important;
+    /* margin-top:1.8rem !important; */
+  }
+  .published-line em{ font-style:italic; color:var(--mute); }
+  .published-line a{
+    color:var(--accent);
+    text-decoration:none;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .published-line a:hover{ border-color:var(--accent); }
+
+  .resume-cta{ margin-top:2.4rem; }
+  .resume-cta a{
+    font-family:'Space Mono',monospace;
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--cobalt);
+    text-decoration:none;
+    border-bottom:1px solid var(--line-soft);
+    padding-bottom:2px;
+    transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .resume-cta a:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* ============ SAY HI TRIGGER ============ */
+  .say-hi{
+    background:none;
+    border:none;
+    padding:0;
+    font:inherit;
+    color:var(--cobalt);
+    cursor:pointer;
+    text-decoration:none;
+    border-bottom:1px solid var(--line-soft);
+    transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .say-hi:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* ============ SAY HI MODAL ============ */
+  .note-overlay{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    /* background:rgba(14,44,88,0.16); */
+    display:flex;
+    align-items:center;
+    justify-content:right;
+    padding:1.5rem;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.25s ease;
+  } 
+  .note-overlay.open{
+    opacity:1;
+    visibility:visible;
+  }
+
+  .note-card{
+    position:relative;
+    width:100%;
+    max-width:360px;
+    background:var(--porcelain); 
+    border:1px solid var(--line-soft);
+    border-radius:1px;
+    padding:2.4rem 2.1rem 2rem;
+    text-align:center;
+    /* box-shadow:0 24px 70px rgba(14,44,88,0.14); */
+    transform:translateY(8px) scale(0.98);
+    transition:transform 0.25s ease;
+  }
+  .note-overlay.open .note-card{
+    transform:translateY(0) scale(1);
+  }
+
+  .note-close{
+    position:absolute;
+    top:0.9rem;
+    right:1rem;
+    background:none;
+    border:none;
+    font-family:'Space Mono',monospace;
+    font-size:0.9rem;
+    color:var(--mute);
+    cursor:pointer;
+    line-height:1;
+    padding:0.2rem 0.4rem;
+    transition:color 0.2s ease;
+  }
+  .note-close:hover{ color:var(--accent); }
+
+  .note-flower{
+    /* font-family:'Space Mono',monospace;
+    color:var(--accent);
+    font-size:0.8rem;
+    letter-spacing:0.2em;
+    margin-bottom:0.9rem;
+    opacity:0.7; */
+  }
+
+  .note-title{
+    font-family:'Fraunces',serif;
+    font-style: italic;
+    font-size:1.35rem;
+    color:var(--cobalt);
+    margin-bottom:0.4rem;
+  }
+
+  .note-sub{
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    font-size:0.78rem;
+    color:var(--mute);
+    line-height:1.6;
+    margin-bottom:1.6rem;
+  }
+
+  .note-field{
+    text-align:center;
+    margin-bottom:1.1rem;
+  }
+  .note-field label{
+    display:block;
+    font-family:'Space Mono',monospace;
+    font-size:0.6rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:0.4rem;
+  }
+  .note-field input,
+  .note-field textarea{
+    width:100%;
+    border:none;
+    border-bottom:1px solid var(--line-soft);
+    background:transparent;
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    font-size:0.86rem;
+    color:var(--cobalt-deep);
+    padding:0.35rem 0.1rem;
+    outline:none;
+    transition:border-color 0.2s ease;
+    resize:none;
+  }
+  .note-field input:focus,
+  .note-field textarea:focus{
+    border-color:var(--accent);
+  }
+  .note-field textarea{ min-height:70px; line-height:1.6; }
+
+  .note-submit{
+    margin-top:0.4rem;
+    width:60%;
+    background:none;
+    border:1px solid var(--cobalt);
+    border-radius:2px;
+    font-family:'Space Mono',monospace;
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--cobalt);
+    padding:0.7rem 1rem;
+    cursor:pointer;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .note-submit:hover{
+    background:var(--cobalt);
+    color:var(--porcelain);
+  }
+
+  .note-status{
+    font-family:'Space Mono',monospace;
+    font-size:0.66rem;
+    color:var(--accent);
+    margin-top:0.9rem;
+    min-height:1em;
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    text-align:center;
+    padding:2.6rem;
+    font-family:'Space Mono',monospace;
+    font-size:0.64rem;
+    color:var(--mute);
+    letter-spacing:0.05em;
+  }
+
+  @media (max-width:600px){
+    h1.display{ font-size:2rem; }
+  }
+
+  /* ============ WATERMARK (top-left blob) ============ */
+  .watermark{
+    position:fixed;
+    top:-90px;
+    left:-90px;
+    width:460px;
+    height:460px;
+    z-index:0;
+    opacity:0.5;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .watermark svg{ width:100%; height:100%; }
+
+  /* ============ CORNER FRAMING ============ */
+  .frame-corner{
+    position:fixed;
+    width:90px;
+    height:90px;
+    z-index:5;
+    opacity:0.55;
+    pointer-events:auto;
+    transition:opacity 0.3s ease;
+  }
+  .frame-corner.tl{ top:22px; left:22px; }
+  .frame-corner.tr{ top:22px; right:22px; transform:scaleX(-1); }
+  .frame-corner.bl{ bottom:22px; left:22px; transform:scaleY(-1); }
+  .frame-corner.br{ bottom:22px; right:22px; transform:scale(-1,-1); }
+
+  /* pattern stays hidden until its corner is hovered */
+  .corner-pattern{
+    opacity:0;
+    transition:opacity 0.4s ease;
+  }
+  .frame-corner:hover{ opacity:0.85; }
+  .frame-corner:hover .corner-pattern{ opacity:0.55; }
+
+  /* ---- hidden ceramic pattern, revealed in a spotlight around the cursor ----
+     Uses an inline SVG tile (no external image dependency) styled to match
+     the site's cobalt palette. A radial-gradient mask, positioned via CSS
+     custom properties updated on mousemove, reveals it only near the cursor. */
+  .ceramic-pattern{
+    position:fixed;inset:0;z-index:0;pointer-events:painted;
+    background-image:url(porcelain.jpeg);
+    background-size:520px 520px;
+    background-position: center;
+    /* background-repeat:repeat; */
+    opacity:0.1;
+    -webkit-mask-image:radial-gradient(circle 200px at var(--mx,-9999px) var(--my,-9999px), black 0%, black 35%, transparent 78%);
+    mask-image:radial-gradient(circle 200px at var(--mx,-9999px) var(--my,-9999px), black 0%, black 35%, transparent 78%);
+  }
+
+  /* everything with real content sits above the decorative layer */
+  nav, .entrance, footer{ position:relative; z-index:1; }
+</style>
+</head>
+<body>
+
+<div class="ceramic-pattern"></div>
+<!-- ============ SHARED CORNER MOTIF ============
+     The bracket + flower are identical on all four corners (the CSS
+     scaleX/scaleY/scale(-1,-1) transforms above already mirror them
+     into place), so that markup lives once here as a <symbol> and is
+     instanced via <use>. Only the little leaf differs per corner, so
+     each corner keeps its own leaf <g> with its own transform. -->
+<!-- The bracket+flower symbol below has NO viewBox: a <symbol> with its own
+     viewBox establishes a separate local coordinate system that clips to
+     that box BEFORE any transform on the <use> is applied, which is what
+     silently clipped the leaf's negative-coordinate path earlier. Without
+     a viewBox, the symbol's content lives directly in the parent's
+     coordinate space, so <use> transforms behave exactly like the
+     original inline markup did. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="corner-bracket-flower">
+      <path d="M2 34 L2 2 L34 2" fill="none" stroke="#1B4B8F" stroke-width="1" stroke-opacity="0.5"/>
+      <!-- flower: centered on the bracket's 45-degree diagonal (x=y) -->
+      <g transform="translate(30,30) rotate(135)">
+        <path d="M0,0 Q -5,-8 0,-16 Q 5,-8 0,0 Z" transform="rotate(-50)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.35"/>
+        <path d="M0,0 Q -6,-11 0,-22 Q 6,-11 0,0 Z" transform="rotate(-25)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.4"/>
+        <path d="M0,0 Q -6.5,-13 0,-26 Q 6.5,-13 0,0 Z" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.45"/>
+        <path d="M0,0 Q -6,-11 0,-22 Q 6,-11 0,0 Z" transform="rotate(25)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.4"/>
+        <path d="M0,0 Q -5,-8 0,-16 Q 5,-8 0,0 Z" transform="rotate(50)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.35"/>
+        <circle cx="0" cy="0" r="1.4" fill="#2E7BE0" fill-opacity="0.4"/>
+      </g>
+    </symbol>
+    <!-- leaf: round with a center notch. Also no viewBox, for the same reason. -->
+    <symbol id="corner-leaf">
+      <path d="M -3.5,-1.5 A 9 9 0 1 1 3.5,-1.5 L 0,-9.5 Z" fill="none" stroke="#1B4B8F" stroke-width="1.3" stroke-opacity="0.55"/>
+    </symbol>
+    <!-- reveal-on-hover pattern: a small dot grid tucked into the corner,
+         invisible until the corner is hovered (see .corner-pattern CSS) -->
+    <symbol id="corner-pattern">
+      <g fill="#2E7BE0">
+        <circle cx="6" cy="6" r="1.1"/>
+        <circle cx="14" cy="6" r="1.1"/>
+        <circle cx="22" cy="6" r="1.1"/>
+        <circle cx="6" cy="14" r="1.1"/>
+        <circle cx="14" cy="14" r="1.1"/>
+        <circle cx="22" cy="14" r="1.1"/>
+        <circle cx="6" cy="22" r="1.1"/>
+        <circle cx="14" cy="22" r="1.1"/>
+        <circle cx="22" cy="22" r="1.1"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<svg class="frame-corner tl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use href="#corner-bracket-flower"/>
+  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
+</svg>
+<svg class="frame-corner tr" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use href="#corner-bracket-flower"/>
+  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
+</svg>
+<svg class="frame-corner bl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use href="#corner-bracket-flower"/>
+  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/> -->
+</svg>
+<svg class="frame-corner br" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use href="#corner-bracket-flower"/>
+  <!-- <use href="#corner-leaf" transform="translate(25,25) rotate(-125)"/> -->
+</svg>
+
+<nav>
+  <span class="nav-title">CLARA·SILWAL</span>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="resume.html">Resume</a>
+  </div>
+</nav>
+
+<div class="entrance">
+  <div class="room-label">Welcome</div>
+  <div class="max-width:416px;margin:0 auto;">
+    <h1 class="display">Clara Silwal</h1>
+    <p class="subtitle">Philosophy of Digital Aesthetics</p>
+  </div>
+
+
+  <p class="align-left">I work at the intersection of mathematics, art history, and philosophy. I am interested in how technological design influences our perception and the choices we make.</p>
+  <p class="align-right">My published work has critically examined autonomy in AI-mediated decision making : </p> <p class = "published-line align-right"><em>Cambridge Journal of AI</em> <a href="https://cjai.co.uk/usersubpost/https-cjai-co-uk-usersubpost-the-burden-of-choice-in-the-age-of-hypernudging-rethinking-autonomy-in-recommendation-systems/" target="_blank" >Choice in the Context of Hypernudging</a></p>
+  <p class="align-left">I am currently researching the digital sublime and how algorithmic opacity shapes aesthetic experiences. More to come in my substack in the coming months.</p>
+  <p class="align-right">Outside of research, I work in ceramics art education, software engineering, and impact-driven community projects<br>
+<button type="button" class="say-hi" id="sayHiTrigger">Say hi :)</button></p>
+
+
+  <div class="resume-cta">
+    <a href="resume.html">View full resume →</a>
+  </div>
+  
+</div>
+
+<footer>© 2026 CLARA SILWAL</footer>
+
+<!-- ============ SAY HI NOTE MODAL ============ -->
+<div class="note-overlay" id="noteOverlay">
+  <div class="note-card">
+    <button type="button" class="note-close" id="noteClose" aria-label="Close">✕</button>
+            <div class="note-flower"><br><br></div>
+    <div class="note-title">Leave a note! <br><br></div>
+
+    <!-- <p class="note-sub">Introduce yourself and share your thoughts.</p> -->
+
+    <form id="noteForm">
+      <div class="note-field">
+        <label for="noteName">Your name</label>
+        <input type="text" id="noteName" name="name" required>
+      </div>
+      <div class="note-field">
+        <label for="noteEmail">Your email</label>
+        <input type="email" id="noteEmail" name="email" required>
+      </div>
+      <div class="note-field">
+        <label for="noteMessage">Note</label>
+        <textarea id="noteMessage" name="message" required></textarea>
+      </div>
+      <button type="submit" class="note-submit">Send note →</button>
+    </form>
+    <div class="note-status" id="noteStatus"></div>
+  </div>
+</div>
+
+<script>
+  // Drives the ceramic-pattern spotlight: keep the mask centered on the cursor.
+  (function(){
+    var root = document.documentElement;
+    window.addEventListener('mousemove', function(e){
+      root.style.setProperty('--mx', e.clientX + 'px');
+      root.style.setProperty('--my', e.clientY + 'px');
+    }, { passive: true });
+  })();
+
+  // Say-hi note modal
+  (function(){
+    var FORMSPREE_ENDPOINT = 'https://formspree.io/f/mkodblbk';
+
+    var trigger = document.getElementById('sayHiTrigger');
+    var overlay = document.getElementById('noteOverlay');
+    var closeBtn = document.getElementById('noteClose');
+    var form = document.getElementById('noteForm');
+    var status = document.getElementById('noteStatus');
+    var nameField = document.getElementById('noteName');
+    var submitBtn = form.querySelector('.note-submit');
+    var titleEl = document.querySelector('.note-title');
+    var flowerEl = document.querySelector('.note-flower');
+    var defaultTitleHTML = titleEl.innerHTML;
+    var defaultFlowerHTML = flowerEl.innerHTML;
+
+    function resetModalChrome(){
+      form.style.display = '';
+      status.textContent = '';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send note →';
+      titleEl.innerHTML = defaultTitleHTML;
+      flowerEl.innerHTML = defaultFlowerHTML;
+    }
+
+    function openModal(){
+      overlay.classList.add('open');
+      resetModalChrome();
+      setTimeout(function(){ nameField.focus(); }, 150);
+    }
+    function closeModal(){
+      overlay.classList.remove('open');
+      setTimeout(function(){
+        form.reset();
+        resetModalChrome();
+      }, 300);
+    }
+
+    trigger.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      status.textContent = '';
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      }).then(function(response){
+        if(response.ok){
+          form.style.display = 'none';
+          titleEl.innerHTML = 'Thank you!';
+          flowerEl.innerHTML = '<br><br>';
+          status.style.color = 'var(--accent)';
+          status.textContent = 'I will get back to you soon';
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send note →';
+          status.style.color = 'var(--accent)';
+          status.textContent = 'Something went wrong. please try again';
+        }
+      }).catch(function(){
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send note →';
+        status.style.color = 'var(--accent)';
+        status.textContent = 'Something went wrong. please try again';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clara Silwal — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --porcelain:#FBFDFF;
+    --wash:#EEF4FB;
+    --cobalt:#1B4B8F;
+    --cobalt-deep:#0E2C58;
+    --line:#C7D9EF;
+    --line-soft:#DCE7F5;
+    --mute:#5C7093;
+    --accent:#2E7BE0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--porcelain);color:var(--cobalt-deep);
+    font-family:'Inter',sans-serif;font-weight:300;
+    overflow-x:hidden;position:relative;
+    font-size:15px;
+  }
+
+  /* ---- blueprint wash: faint dot grid, suggests glaze + schematic paper ---- */
+  body::before{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(circle, #1B4B8F 0.6px, transparent 0.6px);
+    background-size:26px 26px;
+    opacity:0.05;
+  }
+  body::after{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse 60% 40% at 50% 0%,0%, transparent 70%);
+  }
+
+  /* ---- ceramic pattern spotlight, revealed near the cursor (matches home page) ---- */
+  .ceramic-pattern{
+    position:fixed;inset:0;z-index:0;pointer-events:painted;
+    background-image:url(porcelain.jpeg);
+    background-size:520px 520px;
+    background-position: center;
+    opacity:0.1;
+    -webkit-mask-image:radial-gradient(circle 200px at var(--mx,-9999px) var(--my,-9999px), black 0%, black 35%, transparent 78%);
+    mask-image:radial-gradient(circle 200px at var(--mx,-9999px) var(--my,-9999px), black 0%, black 35%, transparent 78%);
+  }
+
+  /* ---- corner brackets: flowing line motif (matches home page) ---- */
+  .frame-corner{
+    position:fixed;
+    width:90px;
+    height:90px;
+    z-index:6;
+    opacity:0.55;
+    pointer-events:none;
+    transition:opacity 0.3s ease;
+  }
+  .frame-corner .corner-deco{ pointer-events:auto; }
+  .frame-corner.tl{ top:22px; left:22px; }
+  .frame-corner.tr{ top:22px; right:22px; transform:scaleX(-1); }
+  .frame-corner.bl{ bottom:22px; left:22px; transform:scaleY(-1); }
+  .frame-corner.br{ bottom:22px; right:22px; transform:scale(-1,-1); }
+
+  /* pattern stays hidden until you hover directly over the dot grid itself */
+  .corner-pattern{
+    opacity:0;
+    transition:opacity 0.4s ease;
+    pointer-events:none;
+  }
+  .corner-hover-zone{
+    fill:transparent;
+    pointer-events:all;
+  }
+  .frame-corner:hover{ opacity:0.85; }
+  .corner-hover-zone:hover ~ .corner-pattern{ opacity:0.55; }
+
+  nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.7rem 3.2rem;position:relative;z-index:5;
+  }
+  .nav-title{
+    font-family:'Space Mono',monospace;font-weight:700;font-size:0.78rem;
+    letter-spacing:0.06em;color:var(--cobalt-deep);
+  }
+  .nav-links a{
+    color:var(--mute);text-decoration:none;margin-left:2rem;
+    font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .nav-links a.active{color:var(--accent);}
+  .nav-links a:hover{color:var(--accent);}
+
+  /* the hero box gets a solid background so the cursor-spotlight pattern
+     stays outside it, same treatment as the home page */
+  .entrance{
+    max-width:760px;margin:0 auto;padding:4rem 2rem 3.2rem;text-align:center;
+    position:relative;z-index:5;
+  }
+  .room-label{
+    font-family:'Space Mono',monospace;font-size:0.66rem;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:1.3rem;
+    display:inline-flex;align-items:center;gap:0.5em;
+  }
+  .room-label::before, .room-label::after{content:'';width:14px;height:1px;background:var(--accent);opacity:0.5;}
+  h1.display{
+    font-family:'Fraunces',serif;font-weight:400;font-size:2.6rem;line-height:1.15;
+    margin-bottom:0.6rem;color:var(--cobalt-deep);
+  }
+  .entrance p.subtitle{
+    font-style:italic;font-family:'Fraunces',serif;color:var(--mute);
+    font-size:0.86rem;line-height:1.8;font-weight:300;
+    max-width:340px;margin:0 auto 2rem;
+  }
+  .entrance p.contact-line{
+    font-family:'Space Mono',monospace;font-style:normal;color:var(--cobalt);
+    font-size:0.68rem;letter-spacing:0.06em;max-width:340px;margin:-1.2rem auto 2rem;
+  }
+  .entrance p.contact-line a{ color:var(--cobalt); text-decoration:none; border-bottom:1px solid var(--line-soft); }
+  .entrance p.contact-line a:hover{ color:var(--accent); border-color:var(--accent); }
+  .entrance p{color:var(--mute);font-size:0.86rem;line-height:1.85;max-width:680px;margin:0 auto;font-weight:300;}
+
+  /* ---- collapsible section header (replaces the old plain scroll-cue divider) ---- */
+  .scroll-cue{
+    margin-top:0;font-family:'Space Mono',monospace;font-size:0.64rem;
+    color:var(--cobalt);letter-spacing:0.18em;
+  }
+  .section-toggle{
+    display:inline-flex;
+    align-items:center;
+    gap:0.6em;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-family:'Space Mono',monospace;
+    font-size:0.64rem;
+    letter-spacing:0.18em;
+    color:var(--cobalt);
+    padding:0.4em 0;
+    transition:color 0.2s ease;
+  }
+  .section-toggle:hover{ color:var(--accent); }
+  .section-toggle .chevron{
+    display:inline-block;
+    width:9px;
+    height:9px;
+    border-right:1px solid currentColor;
+    border-bottom:1px solid currentColor;
+    transform:rotate(-45deg);
+    transition:transform 0.35s ease;
+  }
+  .section-toggle[aria-expanded="true"] .chevron{ transform:rotate(45deg); }
+
+  .collapsible-body{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows 0.45s ease;
+  }
+  .collapsible-body.open{ grid-template-rows:1fr;   background:var(--porcelain);
+}
+  .collapsible-inner{ 
+    overflow:hidden; 
+  }
+
+  /* ---- corridor: dual signal rails at the far outer edges ---- */
+  .corridor{position:relative;max-width:1180px;margin:0 auto;padding:1.2rem 5.2rem 6rem;  background:var(--porcelain);
+}
+
+  .rail{position:absolute;top:0;bottom:0;width:1px;background:var(--line-soft);z-index:1;}
+  .rail.rail-left{left:64px;}
+  .rail.rail-right{right:64px;}
+  .rail::before, .rail::after{
+    content:'';position:absolute;left:50%;transform:translateX(-50%);
+    width:5px;height:5px;background:var(--line-soft);
+  }
+  .rail::before{top:0;}
+  .rail::after{bottom:0;}
+
+  .rail-fill{position:absolute;top:0;width:1px;height:0%;background:var(--accent);z-index:2;transition:height 0.05s linear;}
+  .rail-fill.rail-left{left:64px;}
+  .rail-fill.rail-right{right:64px;}
+
+  .room{position:relative;width:56%;padding:3.4rem 0;z-index:3;}
+  .room.left{text-align:left;padding-left:2.4rem;}
+  .room.right{text-align:right;padding-right:2.4rem;margin-left:44%;}
+
+  .room-num{
+    position:absolute;top:3.4rem;width:20px;height:20px;
+    display:flex;align-items:center;justify-content:center;
+    z-index:4;
+  }
+  .room-num-svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .room-num-svg .rn-body{
+    fill:var(--porcelain); stroke:var(--line-soft); stroke-width:1;
+    transition:fill 0.4s ease, stroke 0.4s ease;
+  }
+  .room-num-svg .rn-crack{
+    fill:none; stroke:var(--line-soft); stroke-width:0.7; stroke-linecap:round;
+    opacity:0.85; transition:stroke 0.4s ease, opacity 0.4s ease;
+  }
+  .room-num span{
+    position:relative; z-index:1;
+    font-family:'Space Mono',monospace; font-size:0.58rem; color:var(--line);
+    transition:color 0.4s ease;
+  }
+  .room.left .room-num{left:-10px;}
+  .room.right .room-num{right:-10px;}
+
+  .room.in-view .room-num-svg .rn-body{ fill:var(--cobalt-deep); stroke:var(--cobalt-deep); }
+  .room.in-view .room-num-svg .rn-crack{ stroke:var(--porcelain); opacity:0.9; }
+  .room.in-view .room-num span{ color:var(--porcelain); }
+
+  .room .tick{
+    position:absolute;top:calc(3.4rem + 9px);width:1.2rem;height:1px;background:var(--line-soft);
+    transition:background 0.4s ease;
+  }
+  .room.left .tick{left:-1.2rem;}
+  .room.right .tick{right:-1.2rem;}
+  .room.in-view .tick{background:var(--accent);}
+
+  .room .eyebrow{
+    font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--line);margin-bottom:0.5rem;transition:color 0.5s ease;
+  }
+  .room.in-view .eyebrow{color:var(--accent);}
+
+  /* ---- Art & Fashion: editorial voice — italic serif, sentence case ---- */
+  .art-voice .eyebrow{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    text-transform:none;letter-spacing:0.01em;font-size:0.82rem;
+  }
+  .art-voice .marks{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    text-transform:none;letter-spacing:0.01em;font-size:0.78rem;
+  }
+  .art-voice p.desc{font-family:'Inter',sans-serif;font-weight:300;font-size:0.82rem;line-height:1.8;}
+
+  /* ---- Tech: technical voice — bracketed, wide-tracked monospace ---- */
+  .tech-voice .eyebrow{
+    letter-spacing:0.18em;font-weight:700;
+  }
+  .tech-voice .eyebrow::before{content:'[ ';}
+  .tech-voice .eyebrow::after{content:' ]';}
+  .tech-voice .marks{letter-spacing:0.12em;font-weight:700;}
+
+  /* ---- Leadership: field-note voice — underlined tab eyebrow, hand-set feel ---- */
+  .lead-voice .eyebrow{
+    font-family:'Space Mono',monospace;font-weight:400;font-style:normal;
+    text-transform:uppercase;letter-spacing:0.14em;font-size:0.62rem;
+    padding-bottom:0.3em;border-bottom:1px solid var(--line-soft);
+    display:inline-block;transition:border-color 0.5s ease;
+  }
+  .lead-voice.room.in-view .eyebrow{border-color:var(--accent);}
+  .lead-voice .marks{
+    font-family:'Fraunces',serif;font-style:normal;font-weight:500;
+    text-transform:uppercase;letter-spacing:0.08em;font-size:0.64rem;
+  }
+  .lead-voice p.desc{font-family:'Inter',sans-serif;font-weight:300;font-size:0.82rem;line-height:1.85;}
+
+  .room h2{
+    font-family:'Fraunces',serif;font-weight:400;font-size:1.22rem;margin-bottom:0.25rem;
+    color:var(--line); transition:color 0.5s ease;line-height:1.3;
+  }
+  .room .role{
+    color:var(--line);font-size:0.76rem;margin-bottom:0.85rem;transition:color 0.5s ease;
+    font-family:'Space Mono',monospace;letter-spacing:0.01em;
+  }
+  .room p.desc{color:var(--line);font-family:'Space Mono',monospace;font-size:0.74rem;line-height:1.7;max-width:560px;transition:color 0.5s ease;font-weight:400;}
+  .room.right p.desc{margin-left:auto;}
+  .room .marks{
+    margin-top:0.9rem;color:var(--line);font-size:0.66rem;letter-spacing:0.05em;
+    transition:color 0.5s ease;font-family:'Space Mono',monospace;text-transform:uppercase;
+  }
+  .room.right .marks{margin-left:auto;}
+
+  .room.in-view h2{color:var(--cobalt-deep);}
+  .room.in-view .role,
+  .room.in-view p.desc{color:var(--mute);}
+  .room.in-view .marks{color:var(--cobalt);}
+
+  .section-divider{
+    max-width:1180px;margin:0 auto;padding:0 3.4rem;position:relative;z-index:3;
+  }
+  .section-divider .rule{
+    height:1px;background:linear-gradient(90deg, transparent, var(--line-soft) 15%, var(--line-soft) 85%, transparent);
+  }
+
+  /* ---- simple list sections (Scholarships & Awards, Skills) — no rail/room chrome ---- */
+  .list-block{max-width:820px;margin:0 auto;padding:1.2rem 2rem 5rem;position:relative;z-index:3;}
+  .list-row{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;
+    padding:0.9rem 0;border-bottom:1px solid var(--line-soft);
+  }
+  .list-row:first-child{border-top:1px solid var(--line-soft);}
+  .list-row .list-title{
+    font-family:'Fraunces',serif;font-size:0.94rem;color:var(--cobalt-deep);font-weight:400;
+  }
+  .list-row .list-date{
+    font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--mute);letter-spacing:0.04em;
+    white-space:nowrap;
+  }
+  .skill-tags{display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;}
+  .skill-tag{
+    font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;
+    color:var(--cobalt);border:1px solid var(--line-soft);border-radius:2px;
+    padding:0.45rem 0.9rem;background:var(--wash);
+  }
+
+  footer{
+    text-align:center;padding:2.6rem;position:relative;z-index:3;
+    font-family:'Space Mono',monospace;font-size:0.64rem;color:var(--mute);letter-spacing:0.05em;
+  }
+
+  @media (max-width:900px){
+    .corridor{padding:1.2rem 3.2rem 5rem;}
+    .rail.rail-left{left:32px;}
+    .rail.rail-right{right:32px;}
+    .rail-fill.rail-left{left:32px;}
+    .rail-fill.rail-right{right:32px;}
+  }
+
+  @media (max-width:720px){
+    nav{padding:1.4rem 1.6rem;}
+    .entrance{padding-left:1.4rem;padding-right:1.4rem;}
+    h1.display{font-size:2rem;}
+    .corridor{padding:1.2rem 2.2rem 4rem;}
+    .rail.rail-left{left:16px;}
+    .rail-fill.rail-left{left:16px;}
+    .room{width:100%;}
+    .room.left, .room.right{text-align:left;padding-left:2rem;padding-right:0;}
+    .room.right{margin-left:0;}
+    .room.right p.desc, .room.right .marks{margin-left:0;}
+    .room.left .room-num, .room.right .room-num{left:-10px;right:auto;}
+    .room.left .tick, .room.right .tick{left:-1.2rem;right:auto;width:1.2rem;}
+    .rail.rail-right, .rail-fill.rail-right{display:none;}
+    .list-row{flex-direction:column;gap:0.2rem;}
+  }
+
+  @media (max-width:480px){
+    .corridor{padding:1.2rem 29.2px 3.5rem;}
+    .rail.rail-left{left:10px;}
+    .rail-fill.rail-left{left:10px;}
+    .room{padding-left:1.6rem;}
+    h1.display{font-size:1.7rem;}
+    .entrance p.subtitle{font-size:0.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ceramic-pattern"></div>
+
+<!-- ============ SHARED CORNER MOTIF (matches home page) ============
+     The bracket + flower are identical on all four corners (the CSS
+     scaleX/scaleY/scale(-1,-1) transforms above already mirror them
+     into place), so that markup lives once here as a <symbol> and is
+     instanced via <use>. Only the little leaf differs per corner, so
+     each corner keeps its own leaf <g> with its own transform. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Crackle-glaze fragment used for the timeline markers: a porcelain
+         disc with hairline crack lines running through it, like a chip
+         of crazed glaze. Cracks flip to pale-on-dark once the disc fills
+         solid, mimicking how crackle catches light differently. -->
+    <symbol id="room-num-crackle" viewBox="0 0 20 20">
+      <circle class="rn-body" cx="10" cy="10" r="8"/>
+      <path class="rn-crack" d="M4.5,5.5 L8,9 L6.5,13 L10,16.5"/>
+      <path class="rn-crack" d="M8,9 L14,7.5"/>
+      <path class="rn-crack" d="M6.5,13 L12.5,14.5"/>
+    </symbol>
+
+    <!-- Corner bracket + flower, and the small leaf + hover-reveal dot
+         grid, no viewBox so <use> transforms behave like inline markup -->
+    <symbol id="corner-bracket-flower">
+      <path d="M2 34 L2 2 L34 2" fill="none" stroke="#1B4B8F" stroke-width="1" stroke-opacity="0.5"/>
+      <!-- flower: centered on the bracket's 45-degree diagonal (x=y) -->
+      <g transform="translate(30,30) rotate(135)">
+        <path d="M0,0 Q -5,-8 0,-16 Q 5,-8 0,0 Z" transform="rotate(-50)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.35"/>
+        <path d="M0,0 Q -6,-11 0,-22 Q 6,-11 0,0 Z" transform="rotate(-25)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.4"/>
+        <path d="M0,0 Q -6.5,-13 0,-26 Q 6.5,-13 0,0 Z" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.45"/>
+        <path d="M0,0 Q -6,-11 0,-22 Q 6,-11 0,0 Z" transform="rotate(25)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.4"/>
+        <path d="M0,0 Q -5,-8 0,-16 Q 5,-8 0,0 Z" transform="rotate(50)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.35"/>
+        <circle cx="0" cy="0" r="1.4" fill="#2E7BE0" fill-opacity="0.4"/>
+      </g>
+    </symbol>
+    <symbol id="corner-leaf">
+      <path d="M -3.5,-1.5 A 9 9 0 1 1 3.5,-1.5 L 0,-9.5 Z" fill="none" stroke="#1B4B8F" stroke-width="1.3" stroke-opacity="0.55"/>
+    </symbol>
+    <symbol id="corner-pattern">
+      <g fill="#2E7BE0">
+        <circle cx="6" cy="6" r="1.1"/>
+        <circle cx="14" cy="6" r="1.1"/>
+        <circle cx="22" cy="6" r="1.1"/>
+        <circle cx="6" cy="14" r="1.1"/>
+        <circle cx="14" cy="14" r="1.1"/>
+        <circle cx="22" cy="14" r="1.1"/>
+        <circle cx="6" cy="22" r="1.1"/>
+        <circle cx="14" cy="22" r="1.1"/>
+        <circle cx="22" cy="22" r="1.1"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<svg class="frame-corner tl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/>
+</svg>
+<svg class="frame-corner tr" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/>
+</svg>
+<svg class="frame-corner bl" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125) scale(-1,1)"/>
+</svg>
+<svg class="frame-corner br" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect class="corner-hover-zone" x="3" y="3" width="22" height="22"/>
+  <use href="#corner-pattern" class="corner-pattern"/>
+  <use class="corner-deco" href="#corner-bracket-flower"/>
+  <use class="corner-deco" href="#corner-leaf" transform="translate(25,25) rotate(-125)"/>
+</svg>
+
+<nav>
+  <span class="nav-title">CLARA·SILWAL</span>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="resume.html" class="active">Resume</a>
+  </div>
+</nav>
+
+<div class="entrance" style="padding-top:6rem;padding-bottom:1.5rem;">
+  <div class="room-label">Resume</div>
+  <div style="max-width:416px;margin:0 auto;">
+    <h1 class="display">Clara Silwal</h1>
+    <p class="subtitle">Philosophy of Digital Aesthetics</p>
+  </div>
+    <p class="desc">I am interested in how technological design influences our perception and the choices we make.</p>
+</div>
+
+<!-- ============ EDUCATION ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-education" aria-expanded="false">
+    <span class="chevron"></span> — EDUCATION —
+  </button>
+</div>
+<div class="collapsible-body" id="body-education">
+<div class="collapsible-inner">
+<div class="corridor" id="corridor1">
+  <div class="rail rail-left"></div>
+  <div class="rail rail-right"></div>
+  <div class="rail-fill rail-left" data-fill></div>
+  <div class="rail-fill rail-right" data-fill></div>
+
+  <div class="room left" id="room1">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>I</span>
+    </div>
+    <h2>Cambridge University</h2>
+        <div class="eyebrow">Lucy Cavendish College, May 2026</div>
+
+    <!-- <div class="role">May 2026</div> -->
+    <p class="desc">Master's in AI Ethics and Society</p>
+    <div class="marks">Aesthetic Theory · Autonomy · Epistemic Injustice</div>
+  </div>
+
+  <div class="room left" id="room1b">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <h2>University of Toronto</h2>
+        <div class="eyebrow">St. Michael's College, November 2023</div>
+
+    <!-- <div class="role">November 2023</div> -->
+    <p class="desc">Bachelor's with a double major in Computer Science and Mathematics <br>GPA: 3.83/4.0</p>
+    <div class="marks">Linear Algebra · Complex Analysis · Data Structures</div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============ RESEARCH EXPERIENCE ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-research" aria-expanded="false">
+    <span class="chevron"></span> — RESEARCH —
+  </button>
+</div>
+<div class="collapsible-body" id="body-research">
+<div class="collapsible-inner">
+<div class="corridor" id="corridor-research">
+  <div class="rail rail-left"></div>
+  <div class="rail rail-right"></div>
+  <div class="rail-fill rail-left" data-fill></div>
+  <div class="rail-fill rail-right" data-fill></div>
+
+    <div class="room left" id="room-research3">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>I</span>
+    </div>
+    <div class="eyebrow">Healthcare AI</div>
+    <h2>Cambridge University</h2>
+    <div class="role">Dec 2024 – Sept 2025</div>
+    <p class="desc">Researched AI tools for endometriosis care from a patient-centered perspective, with a focus on epistemic injustice. Supervised by Professor Amy Gaeta.</p>
+    <div class="marks">AI · Epistemic Injustice · Patient-Centered Design</div>
+  </div>
+
+    <div class="room left" id="room-research2">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <div class="eyebrow">Sanskrit Language</div>
+    <h2>University of Toronto</h2>
+    <div class="role">Research Assistant, May 2021 – Sept 2021</div>
+    <p class="desc">Awarded the Scholar in Residence scholarship to research how meaning shifts across translations and cultural contexts. 
+      Transliterated the Newar Buddhist text <em>Lalitāvistara</em> under Professor Christoph Emmrich's supervision.</p>
+    <div class="marks">Sanskrit · Meaning & Translation · Research Methodology</div>
+  </div>
+
+
+      <div class="room left" id="room-research1">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>III</span>
+    </div>
+    <div class="eyebrow">Educational Software</div>
+    <h2>University of Toronto</h2>
+    <div class="role">Research Assistant, May 2018 – Sept 2018</div>
+    <p class="desc">Developed video game software to make STEM subjects more engaging for students, using C# and Unity, under Professor Steve Engels.</p>
+    <div class="marks">C# · Unity · Educational Software</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ PUBLICATIONS ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-publications" aria-expanded="false">
+    <span class="chevron"></span> — PUBLICATIONS —
+  </button>
+</div>
+<div class="collapsible-body" id="body-publications">
+<div class="collapsible-inner">
+<div class="list-block">
+  <div class="list-row">
+    <span class="list-title">"Choice in the Context of Hypernudging" — Cambridge Journal of AI (CJAI)</span>
+    <span class="list-date">2026</span>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============ PROFESSIONAL EXPERIENCE ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-professional" aria-expanded="false">
+    <span class="chevron"></span> — PROFESSIONAL EXPERIENCE —
+  </button>
+</div>
+<div class="collapsible-body" id="body-professional">
+<div class="collapsible-inner">
+<div class="corridor tech-voice" id="corridor-professional">
+  <div class="rail rail-left"></div>
+  <div class="rail rail-right"></div>
+  <div class="rail-fill rail-left" data-fill></div>
+  <div class="rail-fill rail-right" data-fill></div>
+
+  <div class="room right" id="room-pro1">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>I</span>
+    </div>
+    <div class="eyebrow">Fintech</div>
+    <h2>Scotiabank</h2>
+    <div class="role">Data Engineer, Sept 2021 – Sept 2022</div>
+    <p class="desc">Built and maintained 5+ data pipelines using Airflow, Scala, and Hadoop for financial data processing. Developed Power BI and Tableau dashboards for stakeholder reporting, and automated recurring workflows in Python. Cleaned and analyzed datasets with pySpark and pandas. </p>
+    <div class="marks">Data Pipelines · Python · Financial Services</div>
+  </div>
+
+  <div class="room right" id="room-pro2">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <div class="eyebrow">Software</div>
+    <h2>SOTI</h2>
+    <div class="role">Software Engineer, May 2019 – May 2020</div>
+    <p class="desc">Shipped new features on the SOTI Assist platform using Angular 6, working cross-functionally with product and QA. Built back-end services in .NET and refactored legacy code to improve performance.</p>
+    <div class="marks">Full Stack  · .NET · Software Development</div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============ LEADERSHIP EXPERIENCE ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-tech" aria-expanded="false">
+    <span class="chevron"></span> — LEADERSHIP & IMPACT —
+  </button>
+</div>
+<div class="collapsible-body" id="body-tech">
+<div class="collapsible-inner">
+<div class="corridor" id="corridor2">
+  <div class="rail rail-left"></div>
+  <div class="rail rail-right"></div>
+  <div class="rail-fill rail-left" data-fill></div>
+  <div class="rail-fill rail-right" data-fill></div>
+
+    <div class="room right lead-voice" id="room-pro3">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>I</span>
+    </div>
+    <div class="eyebrow">Organization</div>
+    <h2>The Origin Lab</h2>
+    <div class="role">Co-Founder, Nov 2024 – Present</div>
+    <p class="desc">Non-profit organization focused on community-driven initiatives and ethical AI and data practices. Clients include the World Health Organization, Women on Web, Fierté Montréal Pride, and more.</p>
+    <div class="marks">Non-Profit Management · Community Engagement · Ethical AI</div>
+  </div>
+  
+  <div class="room right lead-voice" id="room3">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <div class="eyebrow">Teaching</div>
+    <h2>Introduction to AI Agents</h2>
+    <div class="role">Teaching Assistant, June 2026 – Present</div>
+    <p class="desc">Teaching assistant for the Introduction to AI Agents course for university students and working professionals in Gaza; with the organization SPOCS for Gaza.</p>
+    <div class="marks">Artificial Intelligence · Machine Learning · Education</div>
+  </div>
+
+</div>
+</div>
+</div>
+
+
+<!-- ============ COMMUNITY INVOLVEMENT · ART & FASHION ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-art" aria-expanded="false">
+    <span class="chevron"></span> — ART & AESTHETICS —
+  </button>
+</div>
+<div class="collapsible-body" id="body-art">
+<div class="collapsible-inner">
+<div class="corridor art-voice" id="corridor3">
+  <div class="rail rail-left"></div>
+  <div class="rail rail-right"></div>
+  <div class="rail-fill rail-left" data-fill></div>
+  <div class="rail-fill rail-right" data-fill></div>
+
+  <div class="room left" id="room4">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>I</span>
+    </div>
+    <div class="eyebrow">Ceramics Museum</div>
+    <h2>Gardiner Museum</h2>
+    <div class="role">Gallery Educator, May 2026 – Present</div>
+    <p class="desc">Gallery Educator for the Gardiner Museum, with a specific interest in contemporary ceramics.</p>
+    <div class="marks">Art History · Porcelain History · Art Education</div>
+  </div>
+
+  <div class="room left" id="room5">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <div class="eyebrow">Creative Agency</div>
+    <h2>RCHIVE</h2>
+    <div class="role">Event Coordinator, August 2026</div>
+    <p class="desc">Event coordinator and host for the upcoming Art Week Toronto 2026, exhibiting 100 artists.</p>
+    <div class="marks">Art Education · Event Coordination · Public Speaking</div>
+  </div>
+
+  <div class="room left" id="room6">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>III</span>
+    </div>
+    <div class="eyebrow">Fashion Magazine</div>
+    <h2>Outside Berlin</h2>
+    <div class="role">Editor, Feb 2026 – Present</div>
+    <p class="desc">Copyeditor for the monthly fashion magazine Outside Berlin which approaches fashion from a philosophical and political perspective.</p>
+    <div class="marks">Fashion · Journalism · Editing</div>
+  </div>
+
+  <div class="room left" id="room7">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>IV</span>
+    </div>
+    <div class="eyebrow">Student Publication</div>
+    <h2>UofT CSSU</h2>
+    <div class="role">Artist</div>
+    <p class="desc">Code artist for the CSSU Yearbook, creating expressionist visuals with p5.js and trigonometric equations.</p>
+    <div class="marks">Creative Coding · Trigonometry · Expressionist Art</div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ SCHOLARSHIPS & AWARDS ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-scholarships" aria-expanded="false">
+    <span class="chevron"></span> — SCHOLARSHIPS & AWARDS —
+  </button>
+</div>
+<div class="collapsible-body" id="body-scholarships">
+<div class="collapsible-inner">
+<div class="list-block">
+  <div class="list-row">
+    <span class="list-title">St. Michael's College Silver Medal for Outstanding Academic Performance</span>
+    <span class="list-date">Nov 2023</span>
+  </div>
+  <div class="list-row">
+    <span class="list-title">University of Toronto Dean's List Scholar</span>
+    <span class="list-date">2018 / 19 / 21 / 23</span>
+  </div>
+  <div class="list-row">
+    <span class="list-title">Jackman Scholars-in-Residence Undergraduate Award</span>
+    <span class="list-date">Sept 2021</span>
+  </div>
+  <div class="list-row">
+    <span class="list-title">Samuel Beatty In-Course Scholarship</span>
+    <span class="list-date">Sept 2018</span>
+  </div>
+  <div class="list-row">
+    <span class="list-title">St. Michael's College In-Course Scholarship</span>
+    <span class="list-date">Sept 2019</span>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============ ADDITIONAL SKILLS ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-skills" aria-expanded="false">
+    <span class="chevron"></span> — ADDITIONAL SKILLS —
+  </button>
+</div>
+<div class="collapsible-body" id="body-skills">
+<div class="collapsible-inner">
+<div class="list-block" style="padding-bottom:5.5rem;">
+  <div class="skill-tags">
+    <span class="skill-tag">Python</span>
+    <span class="skill-tag">PySpark</span>
+    <span class="skill-tag">Pandas</span>
+    <span class="skill-tag">SQL</span>
+    <span class="skill-tag">Tableau</span>
+    <span class="skill-tag">React</span>
+    <span class="skill-tag">Hadoop</span>
+    <span class="skill-tag">Git</span>
+    <span class="skill-tag">Qualitative Analysis</span>
+    <span class="skill-tag">Quantitative Analysis</span>
+  </div>
+</div>
+</div>
+</div>
+
+<footer>© 2026 CLARA SILWAL</footer>
+
+<script>
+  // Ceramic-pattern spotlight (matches home page)
+  (function(){
+    var root = document.documentElement;
+    window.addEventListener('mousemove', function(e){
+      root.style.setProperty('--mx', e.clientX + 'px');
+      root.style.setProperty('--my', e.clientY + 'px');
+    }, { passive: true });
+  })();
+
+  // Collapsible sections — collapsed by default, toggled on click
+  var toggles = document.querySelectorAll('.section-toggle');
+  toggles.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var body = document.getElementById(btn.dataset.target);
+      var isOpen = body.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      // recompute the rail progress / in-view highlighting once the
+      // expand/collapse transition finishes and layout has settled
+      body.addEventListener('transitionend', function handler(){
+        body.removeEventListener('transitionend', handler);
+        updateAll();
+      });
+    });
+  });
+
+  const corridors = document.querySelectorAll('.corridor');
+
+  function updateCorridor(corridor){
+    const rect = corridor.getBoundingClientRect();
+    const viewportCenter = window.innerHeight * 0.55;
+    const rooms = corridor.querySelectorAll('.room');
+    const fills = corridor.querySelectorAll('.rail-fill');
+    if(rooms.length === 0) return;
+
+    const lastRoomNum = rooms[rooms.length - 1].querySelector('.room-num');
+    const lastMarkerRect = lastRoomNum.getBoundingClientRect();
+    const lastMarkerY = (lastMarkerRect.top + lastMarkerRect.bottom) / 2 - rect.top;
+
+    const progressPx = viewportCenter - rect.top;
+    const pct = lastMarkerY !== 0 ? Math.max(0, Math.min(100, (progressPx / lastMarkerY) * 100)) : 0;
+    fills.forEach(f => f.style.height = pct + '%');
+
+    rooms.forEach(room => {
+      const r = room.getBoundingClientRect();
+      const roomCenter = r.top + r.height * 0.35;
+      if (roomCenter < viewportCenter + 40) {
+        room.classList.add('in-view');
+      } else {
+        room.classList.remove('in-view');
+      }
+    });
+  }
+
+  function updateAll(){
+    corridors.forEach(updateCorridor);
+  }
+
+  window.addEventListener('scroll', updateAll);
+  window.addEventListener('resize', updateAll);
+  updateAll();
+</script>
+
+</body>
+</html>
