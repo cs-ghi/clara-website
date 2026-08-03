@@ -27,7 +27,6 @@
     font-size:15px;
   }
 
-  /* ---- blueprint wash: faint dot grid, suggests glaze + schematic paper ---- */
   body::before{
     content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     background-image:radial-gradient(circle, #1B4B8F 0.6px, transparent 0.6px);
@@ -39,7 +38,6 @@
     background:radial-gradient(ellipse 60% 40% at 50% 0%,0%, transparent 70%);
   }
 
-  /* ---- ceramic pattern spotlight, revealed near the cursor (matches home page) ---- */
   .ceramic-pattern{
     position:fixed;inset:0;z-index:0;pointer-events:painted;
     background-image:url(porcelain.jpeg);
@@ -50,7 +48,6 @@
     mask-image:radial-gradient(circle 200px at var(--mx,-9999px) var(--my,-9999px), black 0%, black 35%, transparent 78%);
   }
 
-  /* ---- corner brackets: flowing line motif (matches home page) ---- */
   .frame-corner{
     position:fixed;
     width:90px;
@@ -66,7 +63,6 @@
   .frame-corner.bl{ bottom:22px; left:22px; transform:scaleY(-1); }
   .frame-corner.br{ bottom:22px; right:22px; transform:scale(-1,-1); }
 
-  /* pattern stays hidden until you hover directly over the dot grid itself */
   .corner-pattern{
     opacity:0;
     transition:opacity 0.4s ease;
@@ -106,8 +102,6 @@
   .nav-links a.active{color:var(--accent);}
   .nav-links a:hover{color:var(--accent);}
 
-  /* the hero box gets a solid background so the cursor-spotlight pattern
-     stays outside it, same treatment as the home page */
   .entrance{
     max-width:760px;margin:0 auto;padding:4rem 2rem 3.2rem;text-align:center;
     position:relative;z-index:5;
@@ -135,7 +129,6 @@
   .entrance p.contact-line a:hover{ color:var(--accent); border-color:var(--accent); }
   .entrance p{color:var(--mute);font-size:0.86rem;line-height:1.85;max-width:680px;margin:0 auto;font-weight:300;}
 
-  /* ---- collapsible section header (replaces the old plain scroll-cue divider) ---- */
   .scroll-cue{
     margin-top:0;font-family:'Space Mono',monospace;font-size:0.64rem;
     color:var(--cobalt);letter-spacing:0.18em;
@@ -166,6 +159,20 @@
   }
   .section-toggle[aria-expanded="true"] .chevron{ transform:rotate(45deg); }
 
+  .static-label{
+    font-family:'Space Mono',monospace;font-weight:700;
+    font-size:0.66rem;letter-spacing:0.28em;text-transform:uppercase;
+    color:var(--accent);
+    display:flex;align-items:center;justify-content:center;gap:0.9em;
+  }
+  .static-label::before, .static-label::after{
+    content:'';flex:1;max-width:120px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--line-soft), var(--line-soft));
+  }
+  .static-label::after{
+    background:linear-gradient(90deg, var(--line-soft), var(--line-soft), transparent);
+  }
+
   .collapsible-body{
     display:grid;
     grid-template-rows:0fr;
@@ -177,7 +184,6 @@
     overflow:hidden; 
   }
 
-  /* ---- master expand/collapse-all control ---- */
   .master-toggle-row{
     display:flex;justify-content:center;
     padding:0.2rem 2rem 0.6rem;
@@ -201,7 +207,6 @@
   .master-toggle::after{ content:' ]'; }
   .master-toggle:hover{ color:var(--accent); }
 
-  /* ---- corridor: dual signal rails at the far outer edges ---- */
   .corridor{position:relative;max-width:1180px;margin:0 auto;padding:1.2rem 5.2rem 6rem;  background:var(--porcelain);
 }
 
@@ -263,7 +268,6 @@
   }
   .room.in-view .eyebrow{color:var(--accent);}
 
-  /* ---- Art & Fashion: editorial voice — italic serif, sentence case ---- */
   .art-voice .eyebrow{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
     text-transform:none;letter-spacing:0.01em;font-size:0.82rem;
@@ -274,7 +278,6 @@
   }
   .art-voice p.desc{font-family:'Inter',sans-serif;font-weight:300;font-size:0.82rem;line-height:1.8;}
 
-  /* ---- Tech: technical voice — bracketed, wide-tracked monospace ---- */
   .tech-voice .eyebrow{
     letter-spacing:0.18em;font-weight:700;
   }
@@ -282,7 +285,6 @@
   .tech-voice .eyebrow::after{content:' ]';}
   .tech-voice .marks{letter-spacing:0.12em;font-weight:700;}
 
-  /* ---- Leadership: field-note voice — underlined tab eyebrow, hand-set feel ---- */
   .lead-voice .eyebrow{
     font-family:'Space Mono',monospace;font-weight:400;font-style:normal;
     text-transform:uppercase;letter-spacing:0.14em;font-size:0.62rem;
@@ -324,7 +326,6 @@
     height:1px;background:linear-gradient(90deg, transparent, var(--line-soft) 15%, var(--line-soft) 85%, transparent);
   }
 
-  /* ---- simple list sections (Scholarships & Awards, Skills) — no rail/room chrome ---- */
   .list-block{max-width:820px;margin:0 auto;padding:1.2rem 2rem 5rem;position:relative;z-index:3;}
   .list-row{
     display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;
@@ -339,6 +340,8 @@
     white-space:nowrap;
   }
   .skill-tags{display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;}
+
+  .list-title a:hover{ color:var(--accent); border-color:var(--accent); }
   .skill-tag{
     font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;
     color:var(--cobalt);border:1px solid var(--line-soft);border-radius:2px;
@@ -359,7 +362,6 @@
   }
 
   @media (max-width:720px){
-    /* nav{padding:1.4rem 1.6rem;} */
     .entrance{padding-left:1.4rem;padding-right:1.4rem;}
     h1.display{font-size:2rem;}
     .corridor{padding:1.2rem 2.2rem 4rem;}
@@ -380,8 +382,6 @@
     .rail.rail-left{left:10px;}
     .rail-fill.rail-left{left:10px;}
     .room{padding-left:1.6rem;}
-    /* h1.display{font-size:1.7rem;} */
-    /* .entrance p.subtitle{font-size:0.8rem;} */
   }
 </style>
 </head>
@@ -470,6 +470,25 @@
     <p class="desc"> My research examines how aesthetic judgement and decision-making are reshaped by AI systems.</p>
 </div>
 
+<!-- ============ WRITING ============ -->
+<div class="entrance" style="padding:0.6rem 2rem 0.2rem;">
+  <div class="static-label">Writing</div>
+</div>
+<div class="collapsible-body open" id="body-writing">
+<div class="collapsible-inner">
+<div class="list-block" style="padding-bottom:1rem;">
+  <div class="list-row">
+    <span class="list-title"><a href="https://cjai.co.uk/usersubpost/https-cjai-co-uk-usersubpost-the-burden-of-choice-in-the-age-of-hypernudging-rethinking-autonomy-in-recommendation-systems/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--line-soft);">"Choice in the Context of Hypernudging"</a> — Cambridge Journal of AI (CJAI)</span>
+    <span class="list-date">2026</span>
+  </div>
+  <div class="list-row">
+    <span class="list-title">"Against a Strict Ordering of Mathematical Aesthetics"</span>
+    <span class="list-date"></span>
+  </div>
+</div>
+</div>
+</div>
+
 <div class="master-toggle-row">
   <button class="master-toggle" id="master-toggle">
     <span id="master-toggle-label">Expand All</span>
@@ -477,22 +496,50 @@
 </div>
 
 
-<!-- ============ PUBLICATIONS ============ -->
+<!-- ============ EDUCATION ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
-  <button class="section-toggle" data-target="body-publications" aria-expanded="false">
-    <span class="chevron"></span> — PUBLICATIONS —
+  <button class="section-toggle" data-target="body-education" aria-expanded="false">
+    <span class="chevron"></span> — EDUCATION —
   </button>
 </div>
-<div class="collapsible-body" id="body-publications">
+<div class="collapsible-body" id="body-education">
 <div class="collapsible-inner">
-<div class="list-block">
-  <div class="list-row">
-    <span class="list-title">"Choice in the Context of Hypernudging" — Cambridge Journal of AI (CJAI)</span>
-    <span class="list-date">2026</span>
+<div class="corridor" id="corridor1">
+  <div class="rail rail-left"></div>
+  <div class="rail rail-right"></div>
+  <div class="rail-fill rail-left" data-fill></div>
+  <div class="rail-fill rail-right" data-fill></div>
+
+  <div class="room left" id="room1">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>I</span>
+    </div>
+    <h2>Cambridge University</h2>
+        <div class="eyebrow">Lucy Cavendish College, May 2026</div>
+
+    <p class="desc">Master's in AI Ethics and Society</p>
+    <p class="desc">Specializing in epistemic theory and aesthetics </p>
+    <div class="marks">Aesthetic Theory · Autonomy · Epistemic Injustice</div>
+  </div>
+
+  <div class="room left" id="room1b">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <h2>University of Toronto</h2>
+        <div class="eyebrow">St. Michael's College, November 2023</div>
+
+    <p class="desc">Bachelor's with a double major in Computer Science and Mathematics <br>GPA: 3.83/4.0</p>
+    <div class="marks">Linear Algebra · Complex Analysis · Data Structures</div>
   </div>
 </div>
 </div>
 </div>
+
 
 
 <!-- ============ RESEARCH EXPERIENCE ============ -->
@@ -551,96 +598,7 @@
   </div>
 </div>
 </div>
-
-<!-- ============ EDUCATION ============ -->
-<div class="entrance" style="padding:0.4rem 2rem;">
-  <button class="section-toggle" data-target="body-education" aria-expanded="false">
-    <span class="chevron"></span> — EDUCATION —
-  </button>
 </div>
-<div class="collapsible-body" id="body-education">
-<div class="collapsible-inner">
-<div class="corridor" id="corridor1">
-  <div class="rail rail-left"></div>
-  <div class="rail rail-right"></div>
-  <div class="rail-fill rail-left" data-fill></div>
-  <div class="rail-fill rail-right" data-fill></div>
-
-  <div class="room left" id="room1">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>I</span>
-    </div>
-    <h2>Cambridge University</h2>
-        <div class="eyebrow">Lucy Cavendish College, May 2026</div>
-
-    <p class="desc">Master's in AI Ethics and Society</p>
-    <p class="desc">Specializing in epistemic theory and aesthetics </p>
-    <div class="marks">Aesthetic Theory · Autonomy · Epistemic Injustice</div>
-  </div>
-
-  <div class="room left" id="room1b">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>II</span>
-    </div>
-    <h2>University of Toronto</h2>
-        <div class="eyebrow">St. Michael's College, November 2023</div>
-
-    <p class="desc">Bachelor's with a double major in Computer Science and Mathematics <br>GPA: 3.83/4.0</p>
-    <div class="marks">Linear Algebra · Complex Analysis · Data Structures</div>
-  </div>
-</div>
-</div>
-</div>
-
-
-
-<!-- ============ PROFESSIONAL EXPERIENCE IN TECHNOLOGY ============ -->
-<div class="entrance" style="padding:0.4rem 2rem;">
-  <button class="section-toggle" data-target="body-professional" aria-expanded="false">
-    <span class="chevron"></span> — APPLIED TECHNOLOGY —
-  </button>
-</div>
-<div class="collapsible-body" id="body-professional">
-<div class="collapsible-inner">
-<div class="corridor tech-voice" id="corridor-professional">
-  <div class="rail rail-left"></div>
-  <div class="rail rail-right"></div>
-  <div class="rail-fill rail-left" data-fill></div>
-  <div class="rail-fill rail-right" data-fill></div>
-
-  <div class="room right" id="room-pro1">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>I</span>
-    </div>
-    <div class="eyebrow">Fintech</div>
-    <h2>Scotiabank</h2>
-    <div class="role">Data Engineer, Sept 2021 – Sept 2022</div>
-    <p class="desc">Built and maintained 5+ data pipelines using Airflow, Scala, and Hadoop for financial data processing. Developed Power BI and Tableau dashboards for stakeholder reporting, and automated recurring workflows in Python. Cleaned and analyzed datasets with pySpark and pandas. </p>
-    <div class="marks">Data Pipelines · Python · Financial Services</div>
-  </div>
-
-  <div class="room right" id="room-pro2">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>II</span>
-    </div>
-    <div class="eyebrow">Software</div>
-    <h2>SOTI</h2>
-    <div class="role">Software Engineer, May 2019 – May 2020</div>
-    <p class="desc">Shipped new features on the SOTI Assist platform using Angular 6, working cross-functionally with product and QA. Built back-end services in .NET and refactored legacy code to improve performance.</p>
-    <div class="marks">Full Stack  · .NET · Software Development</div>
-  </div>
-</div>
-</div>
-</div>
-
 
 <!-- ============ AESTHETIC PRACTICE ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
@@ -743,6 +701,50 @@
 </div>
 </div>
 </div>
+<!-- ============ PROFESSIONAL EXPERIENCE IN TECHNOLOGY ============ -->
+<div class="entrance" style="padding:0.4rem 2rem;">
+  <button class="section-toggle" data-target="body-professional" aria-expanded="false">
+    <span class="chevron"></span> — APPLIED TECHNOLOGY —
+  </button>
+</div>
+<div class="collapsible-body" id="body-professional">
+<div class="collapsible-inner">
+<div class="corridor tech-voice" id="corridor-professional">
+  <div class="rail rail-left"></div>
+  <div class="rail rail-right"></div>
+  <div class="rail-fill rail-left" data-fill></div>
+  <div class="rail-fill rail-right" data-fill></div>
+
+  <div class="room right" id="room-pro1">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>I</span>
+    </div>
+    <div class="eyebrow">Fintech</div>
+    <h2>Scotiabank</h2>
+    <div class="role">Data Engineer, Sept 2021 – Sept 2022</div>
+    <p class="desc">Built and maintained 5+ data pipelines using Airflow, Scala, and Hadoop for financial data processing. Developed Power BI and Tableau dashboards for stakeholder reporting, and automated recurring workflows in Python. Cleaned and analyzed datasets with pySpark and pandas. </p>
+    <div class="marks">Data Pipelines · Python · Financial Services</div>
+  </div>
+
+  <div class="room right" id="room-pro2">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <div class="eyebrow">Software</div>
+    <h2>SOTI</h2>
+    <div class="role">Software Engineer, May 2019 – May 2020</div>
+    <p class="desc">Shipped new features on the SOTI Assist platform using Angular 6, working cross-functionally with product and QA. Built back-end services in .NET and refactored legacy code to improve performance.</p>
+    <div class="marks">Full Stack  · .NET · Software Development</div>
+  </div>
+</div>
+</div>
+</div>
+
+
 <!-- ============ SCHOLARSHIPS & AWARDS ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
   <button class="section-toggle" data-target="body-scholarships" aria-expanded="false">
@@ -805,7 +807,6 @@
 <footer>© 2026 CLARA SILWAL</footer>
 
 <script>
-  // Ceramic-pattern spotlight (matches home page)
   (function(){
     var root = document.documentElement;
     window.addEventListener('mousemove', function(e){
@@ -814,8 +815,8 @@
     }, { passive: true });
   })();
 
-  // Collapsible sections — collapsed by default, toggled on click
-  var toggles = document.querySelectorAll('.section-toggle');
+  var toggles = document.querySelectorAll('.section-toggle[data-target]');
+  var masterToggles = toggles;
 
   function afterTransition(body, cb){
     body.addEventListener('transitionend', function handler(){
@@ -836,12 +837,11 @@
     });
   });
 
-  // ---- Expand All / Collapse All master control ----
   var masterBtn = document.getElementById('master-toggle');
   var masterLabel = document.getElementById('master-toggle-label');
 
   function setAllSections(open){
-    toggles.forEach(function(btn){
+    masterToggles.forEach(function(btn){
       var body = document.getElementById(btn.dataset.target);
       var currentlyOpen = body.classList.contains('open');
       if (currentlyOpen !== open){
@@ -851,8 +851,6 @@
     });
     masterBtn.classList.toggle('all-open', open);
     masterLabel.textContent = open ? 'Collapse All' : 'Expand All';
-    // run updateAll a few times while the grid-template-rows transition plays,
-    // since each section can finish at a slightly different moment
     var start = performance.now();
     (function tick(){
       updateAll();
@@ -861,7 +859,7 @@
   }
 
   function syncMasterToggleState(){
-    var allOpen = Array.prototype.every.call(toggles, function(btn){
+    var allOpen = Array.prototype.every.call(masterToggles, function(btn){
       return document.getElementById(btn.dataset.target).classList.contains('open');
     });
     masterBtn.classList.toggle('all-open', allOpen);
@@ -907,6 +905,8 @@
 
   window.addEventListener('scroll', updateAll);
   window.addEventListener('resize', updateAll);
+
+  syncMasterToggleState();
   updateAll();
 </script>
 
