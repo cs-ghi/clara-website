@@ -177,6 +177,30 @@
     overflow:hidden; 
   }
 
+  /* ---- master expand/collapse-all control ---- */
+  .master-toggle-row{
+    display:flex;justify-content:center;
+    padding:0.2rem 2rem 0.6rem;
+    position:relative;z-index:5;
+  }
+  .master-toggle{
+    display:inline-flex;
+    align-items:center;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:0.66rem;
+    letter-spacing:0.18em;
+    color:var(--cobalt);
+    padding:0.4em 0;
+    transition:color 0.2s ease;
+  }
+  .master-toggle::before{ content:'[ '; }
+  .master-toggle::after{ content:' ]'; }
+  .master-toggle:hover{ color:var(--accent); }
+
   /* ---- corridor: dual signal rails at the far outer edges ---- */
   .corridor{position:relative;max-width:1180px;margin:0 auto;padding:1.2rem 5.2rem 6rem;  background:var(--porcelain);
 }
@@ -365,18 +389,8 @@
 
 <div class="ceramic-pattern"></div>
 
-<!-- ============ SHARED CORNER MOTIF (matches home page) ============
-     The bracket + flower are identical on all four corners (the CSS
-     scaleX/scaleY/scale(-1,-1) transforms above already mirror them
-     into place), so that markup lives once here as a <symbol> and is
-     instanced via <use>. Only the little leaf differs per corner, so
-     each corner keeps its own leaf <g> with its own transform. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <!-- Crackle-glaze fragment used for the timeline markers: a porcelain
-         disc with hairline crack lines running through it, like a chip
-         of crazed glaze. Cracks flip to pale-on-dark once the disc fills
-         solid, mimicking how crackle catches light differently. -->
     <symbol id="room-num-crackle" viewBox="0 0 20 20">
       <circle class="rn-body" cx="10" cy="10" r="8"/>
       <path class="rn-crack" d="M4.5,5.5 L8,9 L6.5,13 L10,16.5"/>
@@ -384,11 +398,8 @@
       <path class="rn-crack" d="M6.5,13 L12.5,14.5"/>
     </symbol>
 
-    <!-- Corner bracket + flower, and the small leaf + hover-reveal dot
-         grid, no viewBox so <use> transforms behave like inline markup -->
     <symbol id="corner-bracket-flower">
       <path d="M2 34 L2 2 L34 2" fill="none" stroke="#1B4B8F" stroke-width="1" stroke-opacity="0.5"/>
-      <!-- flower: centered on the bracket's 45-degree diagonal (x=y) -->
       <g transform="translate(30,30) rotate(135)">
         <path d="M0,0 Q -5,-8 0,-16 Q 5,-8 0,0 Z" transform="rotate(-50)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.35"/>
         <path d="M0,0 Q -6,-11 0,-22 Q 6,-11 0,0 Z" transform="rotate(-25)" fill="none" stroke="#2E7BE0" stroke-width="0.9" stroke-opacity="0.4"/>
@@ -459,6 +470,12 @@
     <p class="desc"> My research examines how aesthetic judgement and decision-making are reshaped by AI systems.</p>
 </div>
 
+<div class="master-toggle-row">
+  <button class="master-toggle" id="master-toggle">
+    <span id="master-toggle-label">Expand All</span>
+  </button>
+</div>
+
 <!-- ============ EDUCATION ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
   <button class="section-toggle" data-target="body-education" aria-expanded="false">
@@ -482,9 +499,8 @@
     <h2>Cambridge University</h2>
         <div class="eyebrow">Lucy Cavendish College, May 2026</div>
 
-    <!-- <div class="role">May 2026</div> -->
     <p class="desc">Master's in AI Ethics and Society</p>
-    <p class="desc">Specialized in epistemic theory and aesthetics </p>
+    <p class="desc">Specializing in epistemic theory and aesthetics </p>
     <div class="marks">Aesthetic Theory · Autonomy · Epistemic Injustice</div>
   </div>
 
@@ -497,7 +513,6 @@
     <h2>University of Toronto</h2>
         <div class="eyebrow">St. Michael's College, November 2023</div>
 
-    <!-- <div class="role">November 2023</div> -->
     <p class="desc">Bachelor's with a double major in Computer Science and Mathematics <br>GPA: 3.83/4.0</p>
     <div class="marks">Linear Algebra · Complex Analysis · Data Structures</div>
   </div>
@@ -583,7 +598,7 @@
 <!-- ============ PROFESSIONAL EXPERIENCE IN TECHNOLOGY ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
   <button class="section-toggle" data-target="body-professional" aria-expanded="false">
-    <span class="chevron"></span> — PROFESSIONAL EXPERIENCE IN TECHNOLOGY —
+    <span class="chevron"></span> — APPLIED TECHNOLOGY —
   </button>
 </div>
 <div class="collapsible-body" id="body-professional">
@@ -663,21 +678,6 @@
     <p class="desc">Copyeditor for the monthly fashion magazine Outside Berlin which holds a critical stance on fast fashion and AI, with articles that offer a philosophical, political, and fashion historical exploration of contemporary fashion subject matter.</p>
     <div class="marks">Fashion · Journalism · Editing</div>
   </div>
-
-<!-- 
-  <div class="room left" id="room5">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>II</span>
-    </div>
-    <div class="eyebrow">Creative Agency</div>
-    <h2>RCHIVE</h2>
-    <div class="role">Event Coordinator, July 2026 - August 2026</div>
-    <p class="desc">Event coordinator and host for Art Week Toronto 2026, exhibiting 100 artists.</p>
-    <div class="marks">Art Education · Event Coordination · Public Speaking</div>
-  </div> -->
-
 
   <div class="room left" id="room7">
     <div class="tick"></div>
@@ -813,18 +813,61 @@
 
   // Collapsible sections — collapsed by default, toggled on click
   var toggles = document.querySelectorAll('.section-toggle');
+
+  function afterTransition(body, cb){
+    body.addEventListener('transitionend', function handler(){
+      body.removeEventListener('transitionend', handler);
+      cb();
+    });
+  }
+
   toggles.forEach(function(btn){
     btn.addEventListener('click', function(){
       var body = document.getElementById(btn.dataset.target);
       var isOpen = body.classList.toggle('open');
       btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      // recompute the rail progress / in-view highlighting once the
-      // expand/collapse transition finishes and layout has settled
-      body.addEventListener('transitionend', function handler(){
-        body.removeEventListener('transitionend', handler);
+      afterTransition(body, function(){
         updateAll();
+        syncMasterToggleState();
       });
     });
+  });
+
+  // ---- Expand All / Collapse All master control ----
+  var masterBtn = document.getElementById('master-toggle');
+  var masterLabel = document.getElementById('master-toggle-label');
+
+  function setAllSections(open){
+    toggles.forEach(function(btn){
+      var body = document.getElementById(btn.dataset.target);
+      var currentlyOpen = body.classList.contains('open');
+      if (currentlyOpen !== open){
+        body.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+    });
+    masterBtn.classList.toggle('all-open', open);
+    masterLabel.textContent = open ? 'Collapse All' : 'Expand All';
+    // run updateAll a few times while the grid-template-rows transition plays,
+    // since each section can finish at a slightly different moment
+    var start = performance.now();
+    (function tick(){
+      updateAll();
+      if (performance.now() - start < 500) requestAnimationFrame(tick);
+    })();
+  }
+
+  function syncMasterToggleState(){
+    var allOpen = Array.prototype.every.call(toggles, function(btn){
+      return document.getElementById(btn.dataset.target).classList.contains('open');
+    });
+    masterBtn.classList.toggle('all-open', allOpen);
+    masterLabel.textContent = allOpen ? 'Collapse All' : 'Expand All';
+  }
+
+  masterBtn.addEventListener('click', function(){
+    var willOpen = !masterBtn.classList.contains('all-open');
+    setAllSections(willOpen);
   });
 
   const corridors = document.querySelectorAll('.corridor');
