@@ -186,12 +186,13 @@
 
   .master-toggle-row{
     display:flex;justify-content:center;
-    padding:0.2rem 2rem 0.6rem;
+    padding:1.9rem 2rem 2.5rem;
     position:relative;z-index:5;
   }
   .master-toggle{
     display:inline-flex;
     align-items:center;
+    gap:0.55em;
     background:none;
     border:none;
     cursor:pointer;
@@ -199,12 +200,13 @@
     font-weight:700;
     font-size:0.66rem;
     letter-spacing:0.18em;
-    color:var(--cobalt);
+    color:var(--accent);
     padding:0.4em 0;
     transition:color 0.2s ease;
   }
   .master-toggle::before{ content:'[ '; }
   .master-toggle::after{ content:' ]'; }
+  .master-toggle .m-chevron{ display:none; }
   .master-toggle:hover{ color:var(--accent); }
 
   .corridor{position:relative;max-width:1180px;margin:0 auto;padding:1.2rem 5.2rem 6rem;  background:var(--porcelain);
@@ -492,6 +494,7 @@
 <div class="master-toggle-row">
   <button class="master-toggle" id="master-toggle">
     <span id="master-toggle-label">Expand All</span>
+    <span class="m-chevron"></span>
   </button>
 </div>
 
