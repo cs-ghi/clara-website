@@ -1,0 +1,229 @@
+<!doctype html>
+<!--
+  NoetherVim favicon lab -- local only, lives under the gitignored dev-docs/.
+
+  Six candidate marks against seven palettes, rendered at the sizes a favicon
+  is actually seen at, on light and dark chrome, and in a mock tab strip.
+  Clicking a cell sets it as this page's live favicon, so the real browser tab
+  is the last word rather than a mock of one.
+
+  Open with:  open dev-docs/icon-lab.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>NoetherVim icon lab</title>
+<link rel="icon" id="live-favicon" href="data:," />
+<style>
+  :root { --bg:#12101a; --fg:#e8e4f0; --dim:#9a93ad; --line:#2c2740; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:2rem 2.5rem 6rem; background:var(--bg); color:var(--fg);
+         font:14px/1.6 ui-sans-serif,-apple-system,"Segoe UI",sans-serif; }
+  h1 { font-size:1.4rem; margin:0 0 .25rem; }
+  h2 { font-size:1rem; margin:2.5rem 0 .75rem; padding-bottom:.4rem;
+       border-bottom:1px solid var(--line); font-weight:600; }
+  p.note { color:var(--dim); margin:.25rem 0 0; max-width:70ch; }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85em;
+         background:#1d1930; padding:.1em .35em; border-radius:3px; }
+
+  /* grid: candidates x palettes */
+  table { border-collapse:collapse; margin-top:.5rem; }
+  th, td { padding:.5rem .6rem; text-align:center; border:1px solid var(--line); }
+  th { font-weight:600; font-size:.78rem; color:var(--dim); text-transform:uppercase;
+       letter-spacing:.04em; }
+  th.rowhead { text-align:left; white-space:nowrap; }
+  td.cell { cursor:pointer; transition:background .12s; }
+  td.cell:hover { background:#1d1930; }
+  td.cell.sel { background:#2a2247; outline:2px solid #7c5cbf; }
+
+  .sizes { display:flex; align-items:flex-end; gap:1.25rem; }
+  .sizes figure { margin:0; text-align:center; }
+  .sizes figcaption { color:var(--dim); font-size:.7rem; margin-top:.3rem; }
+
+  .chrome { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:.75rem; }
+  .chrome .pane { border-radius:10px 10px 0 0; padding:.5rem .5rem 0; width:340px; }
+  .chrome .pane.light { background:#dedbe4; }
+  .chrome .pane.dark  { background:#2a2833; }
+  .tab { display:flex; align-items:center; gap:.5rem; padding:.5rem .75rem;
+         border-radius:8px 8px 0 0; font-size:.8rem; }
+  .pane.light .tab { background:#fff; color:#2a2833; }
+  .pane.dark  .tab { background:#12101a; color:#e8e4f0; }
+  .tab .t { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tab.inactive { background:transparent !important; opacity:.55; }
+
+  .onwhite { background:#ffffff; }
+  .onlight { background:#f2f0f7; }
+  .ondark  { background:#12101a; }
+  .onterm  { background:#282828; } /* gruvbox dark0 */
+
+  .bar { display:flex; align-items:center; gap:.6rem; padding:.6rem .9rem;
+         border-radius:8px; font-weight:600; }
+</style>
+</head>
+<body>
+
+<h1>NoetherVim icon lab</h1>
+<p class="note">
+  Click any cell to set it as this page&rsquo;s live favicon, then look at the
+  real browser tab. The mock tab strip below is a guide; the actual tab is the
+  test. Current pick is shown at the bottom with the SVG source to copy.
+</p>
+
+<h2>1. Candidates &times; palettes &mdash; rendered at 16&thinsp;px</h2>
+<p class="note">
+  16&thinsp;px is the binding constraint: this is the size a favicon is seen at
+  in a tab. If a mark fails here, nothing else about it matters.
+</p>
+<div id="grid"></div>
+
+<h2>2. The selected mark at every size that matters</h2>
+<div class="sizes" id="sizes"></div>
+
+<h2>3. In a browser tab</h2>
+<div class="chrome" id="chrome"></div>
+
+<h2>4. Against backgrounds it will actually meet</h2>
+<div class="chrome" id="contexts"></div>
+
+<h2>5. SVG source for the current pick</h2>
+<p class="note" id="pickname"></p>
+<pre id="src" style="background:#1d1930;padding:1rem;border-radius:6px;overflow-x:auto;
+     font-family:ui-monospace,Menlo,monospace;font-size:.78rem;"></pre>
+
+<script>
+// ── Palettes ───────────────────────────────────────────────────────────────
+// The site is violet; the distribution ships gruvbox, which is what every user
+// sees on first launch. Both are represented so the tension is visible rather
+// than assumed away.
+const PALETTES = {
+  'violet (site accent)': { fg: '#f2ecff', bg: '#7c5cbf' },
+  'violet light':         { fg: '#21193a', bg: '#c9b8f0' },
+  'violet deep':          { fg: '#c9b8f0', bg: '#21193a' },
+  'gruvbox orange':       { fg: '#282828', bg: '#fe8019' },
+  'gruvbox yellow':       { fg: '#282828', bg: '#d79921' },
+  'gruvbox aqua':         { fg: '#282828', bg: '#689d6a' },
+  'mono (ink)':           { fg: '#f2f0f7', bg: '#1d1b24' },
+};
+
+// ── Candidate marks ────────────────────────────────────────────────────────
+// Each returns a full 32x32 SVG. `tile` variants carry their own background so
+// they never disappear against light or dark browser chrome; glyph variants are
+// transparent and rely on contrast.
+const MARKS = {
+  'N tile': (p) => `
+  <rect width="32" height="32" rx="7" fill="${p.bg}"/>
+  <g stroke="${p.fg}" stroke-width="4.2" stroke-linecap="square" fill="none">
+    <line x1="10" y1="24" x2="10" y2="8"/>
+    <line x1="10" y1="8"  x2="22" y2="24"/>
+    <line x1="22" y1="24" x2="22" y2="8"/>
+  </g>`,
+
+  'N glyph': (p) => `
+  <g stroke="${p.bg}" stroke-width="4.6" stroke-linecap="square" fill="none">
+    <line x1="8"  y1="26" x2="8"  y2="6"/>
+    <line x1="8"  y1="6"  x2="24" y2="26"/>
+    <line x1="24" y1="26" x2="24" y2="6"/>
+  </g>`,
+
+  // Noetherian: every ascending chain of ideals stabilises. The outer two
+  // rings sit close together to show the chain has stopped growing.
+  'chain tile': (p) => `
+  <rect width="32" height="32" rx="7" fill="${p.bg}"/>
+  <g stroke="${p.fg}" fill="none" stroke-width="2">
+    <rect x="4.5"  y="4.5"  width="23" height="23" rx="2"/>
+    <rect x="7.5"  y="7.5"  width="17" height="17" rx="1.5"/>
+    <rect x="13.5" y="13.5" width="5"  height="5"/>
+  </g>`,
+
+  'chain glyph': (p) => `
+  <g stroke="${p.bg}" fill="none" stroke-width="2.4">
+    <rect x="3.5"  y="3.5"  width="25" height="25" rx="2.5"/>
+    <rect x="7"    y="7"    width="18" height="18" rx="2"/>
+    <rect x="13.5" y="13.5" width="5"  height="5"/>
+  </g>`,
+
+  // The block-ASCII wordmark on the dashboard is flanked by corner glyphs.
+  'bracket': (p) => `
+  <rect width="32" height="32" rx="7" fill="${p.bg}"/>
+  <g stroke="${p.fg}" stroke-width="3.6" fill="none" stroke-linecap="square">
+    <path d="M9 13 V9 H15"/>
+    <path d="M23 19 V23 H17"/>
+    <line x1="11" y1="21" x2="21" y2="11"/>
+  </g>`,
+
+  'partial': (p) => `
+  <rect width="32" height="32" rx="7" fill="${p.bg}"/>
+  <text x="16" y="24" font-size="24" font-family="Georgia,'Times New Roman',serif"
+        font-style="italic" text-anchor="middle" fill="${p.fg}">&#8706;</text>`,
+};
+
+const svg = (name, pal) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">${MARKS[name](PALETTES[pal])}\n</svg>`;
+const uri = (name, pal) => 'data:image/svg+xml;utf8,' + encodeURIComponent(svg(name, pal));
+
+let pick = { mark: 'N tile', pal: 'violet (site accent)' };
+
+// ── Grid ───────────────────────────────────────────────────────────────────
+function buildGrid() {
+  const pals = Object.keys(PALETTES), marks = Object.keys(MARKS);
+  let h = '<table><tr><th class="rowhead">mark</th>';
+  for (const p of pals) h += `<th>${p}</th>`;
+  h += '</tr>';
+  for (const m of marks) {
+    h += `<tr><th class="rowhead">${m}</th>`;
+    for (const p of pals) {
+      h += `<td class="cell" data-m="${m}" data-p="${p}">
+              <img src="${uri(m, p)}" width="16" height="16" alt="">
+            </td>`;
+    }
+    h += '</tr>';
+  }
+  document.getElementById('grid').innerHTML = h + '</table>';
+  document.querySelectorAll('td.cell').forEach((td) =>
+    td.addEventListener('click', () => select(td.dataset.m, td.dataset.p)));
+}
+
+function select(m, p) {
+  pick = { mark: m, pal: p };
+  document.querySelectorAll('td.cell').forEach((td) =>
+    td.classList.toggle('sel', td.dataset.m === m && td.dataset.p === p));
+
+  document.getElementById('live-favicon').href = uri(m, p);
+
+  document.getElementById('sizes').innerHTML = [16, 24, 32, 64, 128]
+    .map((s) => `<figure><img src="${uri(m, p)}" width="${s}" height="${s}" alt="">
+                 <figcaption>${s}px</figcaption></figure>`).join('');
+
+  const tab = (cls, label) => `
+    <div class="pane ${cls}">
+      <div class="tab">
+        <img src="${uri(m, p)}" width="16" height="16" alt="">
+        <span class="t">NoetherVim &mdash; Reference</span>
+      </div>
+      <div class="tab inactive">
+        <img src="${uri(m, p)}" width="16" height="16" alt="">
+        <span class="t">Bundles</span>
+      </div>
+      <div style="height:.5rem"></div>
+    </div>`;
+  document.getElementById('chrome').innerHTML = tab('light') + tab('dark');
+
+  const ctx = (cls, label, textcol) => `
+    <div class="bar ${cls}" style="color:${textcol};width:340px">
+      <img src="${uri(m, p)}" width="24" height="24" alt=""> ${label}
+    </div>`;
+  document.getElementById('contexts').innerHTML =
+      ctx('onwhite', 'white page',            '#1d1b24')
+    + ctx('onlight', 'site light mode',       '#1d1b24')
+    + ctx('ondark',  'site dark mode',        '#e8e4f0')
+    + ctx('onterm',  'gruvbox terminal',      '#ebdbb2');
+
+  document.getElementById('pickname').textContent = `${m} / ${p}`;
+  document.getElementById('src').textContent = svg(m, p);
+}
+
+buildGrid();
+select(pick.mark, pick.pal);
+</script>
+</body>
+</html>
