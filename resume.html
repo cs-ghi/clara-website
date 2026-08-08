@@ -321,12 +321,29 @@
   .branch-tick{
     position:absolute;
     left:-3.6rem;top:50%;
-    width:0.8rem;height:1px;
-    background:var(--line-soft);
+    width:calc(1.2rem - 10px + 5px);height:1px;
+    background:var(--line);
     transform:translateY(-50%);
-    transition:background 0.4s ease;
+    overflow:visible;
   }
-  .branch-tick.passed{ background:var(--accent); }
+  .branch-tick::before{
+    content:'';
+    position:absolute;
+    left:100%;top:50%;
+    width:5px;height:5px;
+    background:rgba(199,217,239,0.45);
+    transform:translate(-100%,-50%);
+    z-index:2;
+  }
+  .branch-tick-fill{
+    position:absolute;
+    left:0;top:0;
+    height:100%;
+    width:0;
+    background:var(--accent);
+    transition:width 0.4s ease;
+  }
+  .branch-tick.passed .branch-tick-fill{ width:100%; }
   .sublist-row{margin-bottom:1.1rem;}
   .sublist-row:last-child{margin-bottom:0;}
   .sublist-head{display:flex;justify-content:space-between;align-items:baseline;gap:1.2rem;flex-wrap:wrap;}
@@ -361,9 +378,9 @@
   .corridor .list-block{max-width:none;margin:0;padding-left:2.4rem;padding-right:2.4rem;}
   .corridor .list-block .sublist-label{margin-bottom:0.6rem;}
   .corridor .list-block .list-row{
-    padding:0.35rem 0;border-bottom-style:dashed;
+    padding:0.35rem 0;border-bottom-color:#ECF2FA;
   }
-  .corridor .list-block .list-row:first-child{border-top-style:dashed;}
+  .corridor .list-block .list-row:first-child{border-top-color:#ECF2FA;}
   .list-row{
     display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;
     padding:0.9rem 0;border-bottom:1px solid var(--line-soft);
@@ -624,7 +641,7 @@
   <div class="uni-divider uni-divider-inner"></div>
 
   <div class="sublist-wrap">
-    <div class="sublist-label"><span class="branch-tick"></span>Research</div>
+    <div class="sublist-label"><span class="branch-tick"><span class="branch-tick-fill"></span></span>Research</div>
     <div class="sublist-row">
       <div class="sublist-head">
         <span class="sublist-title">Epistemic Theory, Thesis Project</span>
@@ -660,7 +677,7 @@
   <div class="uni-divider uni-divider-inner"></div>
 
   <div class="sublist-wrap">
-    <div class="sublist-label"><span class="branch-tick"></span>Research</div>
+    <div class="sublist-label"><span class="branch-tick"><span class="branch-tick-fill"></span></span>Research</div>
     <div class="sublist-row">
       <div class="sublist-head">
         <span class="sublist-title">Comparative Literature, Scholar in Residence</span>
@@ -680,7 +697,7 @@
   <div class="uni-divider"></div>
 
 <div class="list-block list-block-compact" style="margin-top:-2.2rem;padding-top:0.4rem;padding-bottom:0;position:relative;z-index:3;">
-  <div class="sublist-label"><span class="branch-tick"></span>Scholarships & Awards</div>
+  <div class="sublist-label"><span class="branch-tick"><span class="branch-tick-fill"></span></span>Scholarships & Awards</div>
   <div class="list-row">
     <span class="list-title">St. Michael's College Silver Medal for Outstanding Academic Performance</span>
     <span class="list-date">Nov 2023</span>
@@ -701,7 +718,6 @@
     <span class="list-title">St. Michael's College In-Course Scholarship</span>
     <span class="list-date">Sept 2019</span>
   </div>
-</div>
 </div>
 </div>
 </div>
