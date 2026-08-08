@@ -17,6 +17,10 @@
     --line-soft:#DCE7F5;
     --mute:#5C7093;
     --accent:#2E7BE0;
+    --sp-1:0.6rem;
+    --sp-2:1.2rem;
+    --sp-3:2.4rem;
+    --sp-4:3.6rem;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -226,7 +230,7 @@
   .rail-fill.rail-left{left:64px;}
   .rail-fill.rail-right{right:64px;}
 
-  .room{position:relative;width:56%;padding:3.4rem 0;z-index:3;}
+  .room{position:relative;width:56%;padding:var(--sp-4) 0;z-index:3;}
   .room.left{text-align:left;padding-left:2.4rem;padding-right:2.4rem;}
   .room.right{text-align:right;padding-right:2.4rem;padding-left:2.4rem;margin-left:44%;}
 
@@ -309,13 +313,14 @@
   .room.right .marks{margin-left:auto;}
 
   .sublist-wrap{
-    position:relative;z-index:3;margin:0 0 3.6rem;
-    padding:0.4rem 2.4rem 0 2.4rem;
+    position:relative;z-index:3;margin:0 0 var(--sp-4);
+    padding:0 var(--sp-3) 0 var(--sp-3);
   }
   .sublist-wrap:last-of-type{margin-bottom:0;}
+  .sublist-wrap-tight{margin-bottom:var(--sp-2);}
   .sublist-label{
-    font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;
-    color:var(--accent);text-align:left;margin-bottom:1.1rem;
+    font-family:'Space Mono',monospace;font-weight:400;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--accent);text-align:left;margin-bottom:var(--sp-1);
     position:relative;
   }
   .branch-tick{
@@ -344,7 +349,7 @@
     transition:width 0.4s ease;
   }
   .branch-tick.passed .branch-tick-fill{ width:100%; }
-  .sublist-row{margin-bottom:1.1rem;}
+  .sublist-row{margin-bottom:var(--sp-2);}
   .sublist-row:last-child{margin-bottom:0;}
   .sublist-head{display:flex;justify-content:space-between;align-items:baseline;gap:1.2rem;flex-wrap:wrap;}
   .sublist-title{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--cobalt-deep);}
@@ -365,11 +370,11 @@
     height:1px;background:linear-gradient(90deg, transparent, var(--line-soft) 15%, var(--line-soft) 85%, transparent);
   }
   .uni-divider{
-    height:1px;margin:0 2.4rem 3rem;
+    height:1px;margin:0 var(--sp-3) var(--sp-3);
     background:linear-gradient(90deg, var(--line-soft) 0%, var(--line-soft) 60%, transparent 100%);
   }
   .uni-divider-inner{
-    margin:0 2.4rem 1.2rem;opacity:0.6;
+    margin:calc(-1 * (var(--sp-4) - var(--sp-1))) var(--sp-3) var(--sp-1);opacity:0.6;
   }
 
   .list-block{max-width:1180px;margin:0 auto;padding:1.2rem 5.2rem 5rem;position:relative;z-index:3;}
@@ -640,7 +645,7 @@
 
   <div class="uni-divider uni-divider-inner"></div>
 
-  <div class="sublist-wrap">
+  <div class="sublist-wrap sublist-wrap-tight">
     <div class="sublist-label"><span class="branch-tick"><span class="branch-tick-fill"></span></span>Research</div>
     <div class="sublist-row">
       <div class="sublist-head">
@@ -676,7 +681,7 @@
 
   <div class="uni-divider uni-divider-inner"></div>
 
-  <div class="sublist-wrap">
+  <div class="sublist-wrap sublist-wrap-tight">
     <div class="sublist-label"><span class="branch-tick"><span class="branch-tick-fill"></span></span>Research</div>
     <div class="sublist-row">
       <div class="sublist-head">
@@ -696,7 +701,7 @@
 
   <div class="uni-divider"></div>
 
-<div class="list-block list-block-compact" style="margin-top:-2.2rem;padding-top:0.4rem;padding-bottom:0;position:relative;z-index:3;">
+<div class="list-block list-block-compact" style="margin-top:calc(-1 * var(--sp-3));padding-top:var(--sp-1);padding-bottom:0;position:relative;z-index:3;">
   <div class="sublist-label"><span class="branch-tick"><span class="branch-tick-fill"></span></span>Scholarships & Awards</div>
   <div class="list-row">
     <span class="list-title">St. Michael's College Silver Medal for Outstanding Academic Performance</span>
