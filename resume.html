@@ -237,38 +237,31 @@
   }
   .room-num-svg{ position:absolute; inset:0; width:100%; height:100%; }
   .room-num-svg .rn-body{
-    fill:var(--porcelain); stroke:var(--line-soft); stroke-width:1;
-    transition:fill 0.4s ease, stroke 0.4s ease;
+    fill:var(--cobalt-deep); stroke:var(--cobalt-deep); stroke-width:1;
   }
   .room-num-svg .rn-crack{
-    fill:none; stroke:var(--line-soft); stroke-width:0.7; stroke-linecap:round;
-    opacity:0.85; transition:stroke 0.4s ease, opacity 0.4s ease;
+    fill:none; stroke:var(--porcelain); stroke-width:0.7; stroke-linecap:round;
+    opacity:0.9;
   }
   .room-num span{
     position:relative; z-index:1;
-    font-family:'Space Mono',monospace; font-size:0.58rem; color:var(--line);
-    transition:color 0.4s ease;
+    font-family:'Space Mono',monospace; font-size:0.58rem; color:var(--porcelain);
   }
   .room.left .room-num{left:-10px;}
   .room.right .room-num{right:-10px;}
 
-  .room.in-view .room-num-svg .rn-body{ fill:var(--cobalt-deep); stroke:var(--cobalt-deep); }
-  .room.in-view .room-num-svg .rn-crack{ stroke:var(--porcelain); opacity:0.9; }
-  .room.in-view .room-num span{ color:var(--porcelain); }
-
   .room .tick{
     position:absolute;top:calc(3.4rem + 9px);width:1.2rem;height:1px;background:var(--line-soft);
-    transition:background 0.4s ease;
+    transition:background 0.25s ease;
   }
+  .room .tick.passed{ background:var(--accent); }
   .room.left .tick{left:-1.2rem;}
   .room.right .tick{right:-1.2rem;}
-  .room.in-view .tick{background:var(--accent);}
 
   .room .eyebrow{
     font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;
-    text-transform:uppercase;color:var(--line);margin-bottom:0.5rem;transition:color 0.5s ease;
+    text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;
   }
-  .room.in-view .eyebrow{color:var(--accent);}
 
   .art-voice .eyebrow{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
@@ -290,10 +283,9 @@
   .lead-voice .eyebrow{
     font-family:'Space Mono',monospace;font-weight:400;font-style:normal;
     text-transform:uppercase;letter-spacing:0.14em;font-size:0.62rem;
-    padding-bottom:0.3em;border-bottom:1px solid var(--line-soft);
-    display:inline-block;transition:border-color 0.5s ease;
+    padding-bottom:0.3em;border-bottom:1px solid var(--accent);
+    display:inline-block;
   }
-  .lead-voice.room.in-view .eyebrow{border-color:var(--accent);}
   .lead-voice .marks{
     font-family:'Fraunces',serif;font-style:normal;font-weight:500;
     text-transform:uppercase;letter-spacing:0.08em;font-size:0.64rem;
@@ -302,37 +294,39 @@
 
   .room h2{
     font-family:'Fraunces',serif;font-weight:400;font-size:1.22rem;margin-bottom:0.25rem;
-    color:var(--line); transition:color 0.5s ease;line-height:1.3;
+    color:var(--cobalt-deep);line-height:1.3;
   }
   .room .role{
-    color:var(--line);font-size:0.76rem;margin-bottom:0.85rem;transition:color 0.5s ease;
+    color:var(--mute);font-size:0.76rem;margin-bottom:0.85rem;
     font-family:'Space Mono',monospace;letter-spacing:0.01em;
   }
-  .room p.desc{color:var(--line);font-family:'Space Mono',monospace;font-size:0.74rem;line-height:1.7;max-width:560px;transition:color 0.5s ease;font-weight:400;}
+  .room p.desc{color:var(--mute);font-family:'Space Mono',monospace;font-size:0.74rem;line-height:1.7;max-width:560px;font-weight:400;}
   .room.right p.desc{margin-left:auto;}
   .room .marks{
-    margin-top:0.9rem;color:var(--line);font-size:0.66rem;letter-spacing:0.05em;
-    transition:color 0.5s ease;font-family:'Space Mono',monospace;text-transform:uppercase;
+    margin-top:0.9rem;color:var(--cobalt);font-size:0.66rem;letter-spacing:0.05em;
+    font-family:'Space Mono',monospace;text-transform:uppercase;
   }
   .room.right .marks{margin-left:auto;}
-
-  .room.in-view h2{color:var(--cobalt-deep);}
-  .room.in-view .role,
-  .room.in-view p.desc{color:var(--mute);}
-  .room.in-view .marks{color:var(--cobalt);}
 
   .sublist-wrap{
     position:relative;z-index:3;margin:0 0 3.6rem;
     padding:0.4rem 2.4rem 0 2.4rem;
-    opacity:0.35;
-    transition:opacity 0.7s ease;
   }
-  .sublist-wrap.in-view{ opacity:1; }
   .sublist-wrap:last-of-type{margin-bottom:0;}
   .sublist-label{
     font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;
     color:var(--accent);text-align:left;margin-bottom:1.1rem;
+    position:relative;
   }
+  .branch-tick{
+    position:absolute;
+    left:-3.6rem;top:50%;
+    width:0.8rem;height:1px;
+    background:var(--line-soft);
+    transform:translateY(-50%);
+    transition:background 0.4s ease;
+  }
+  .branch-tick.passed{ background:var(--accent); }
   .sublist-row{margin-bottom:1.1rem;}
   .sublist-row:last-child{margin-bottom:0;}
   .sublist-head{display:flex;justify-content:space-between;align-items:baseline;gap:1.2rem;flex-wrap:wrap;}
@@ -364,8 +358,7 @@
   .list-block{max-width:1180px;margin:0 auto;padding:1.2rem 5.2rem 5rem;position:relative;z-index:3;}
   /* list-block nested inside a corridor (e.g. Scholarships & Awards) already sits inside
      the corridor's own padding, so align it flush with the rooms instead of re-padding */
-  .corridor .list-block{max-width:none;margin:0;padding-left:2.4rem;padding-right:2.4rem;opacity:0.35;transition:opacity 0.7s ease;}
-  .corridor .list-block.in-view{opacity:1;}
+  .corridor .list-block{max-width:none;margin:0;padding-left:2.4rem;padding-right:2.4rem;}
   .corridor .list-block .sublist-label{margin-bottom:0.6rem;}
   .corridor .list-block .list-row{
     padding:0.35rem 0;border-bottom-style:dashed;
@@ -472,6 +465,7 @@
     .sublist-wrap{padding-left:2rem;padding-right:2rem;}
     .uni-divider{margin-left:2rem;margin-right:2rem;}
     .sublist-head{flex-direction:column;gap:0.15rem;}
+    .branch-tick{left:-3.2rem;}
   }
 
   @media (max-width:480px){
@@ -483,6 +477,7 @@
     .corridor .list-block{padding-left:1.6rem;padding-right:1.6rem;}
     .sublist-wrap{padding-left:1.6rem;padding-right:1.6rem;}
     .uni-divider{margin-left:1.6rem;margin-right:1.6rem;}
+    .branch-tick{left:-2.8rem;}
   }
 </style>
 </head>
@@ -629,7 +624,7 @@
   <div class="uni-divider uni-divider-inner"></div>
 
   <div class="sublist-wrap">
-    <div class="sublist-label">Research</div>
+    <div class="sublist-label"><span class="branch-tick"></span>Research</div>
     <div class="sublist-row">
       <div class="sublist-head">
         <span class="sublist-title">Epistemic Theory, Thesis Project</span>
@@ -665,7 +660,7 @@
   <div class="uni-divider uni-divider-inner"></div>
 
   <div class="sublist-wrap">
-    <div class="sublist-label">Research</div>
+    <div class="sublist-label"><span class="branch-tick"></span>Research</div>
     <div class="sublist-row">
       <div class="sublist-head">
         <span class="sublist-title">Comparative Literature, Scholar in Residence</span>
@@ -685,7 +680,7 @@
   <div class="uni-divider"></div>
 
 <div class="list-block list-block-compact" style="margin-top:-2.2rem;padding-top:0.4rem;padding-bottom:0;position:relative;z-index:3;">
-  <div class="sublist-label">Scholarships & Awards</div>
+  <div class="sublist-label"><span class="branch-tick"></span>Scholarships & Awards</div>
   <div class="list-row">
     <span class="list-title">St. Michael's College Silver Medal for Outstanding Academic Performance</span>
     <span class="list-date">Nov 2023</span>
@@ -943,49 +938,32 @@
 
   function updateCorridor(corridor){
     const rect = corridor.getBoundingClientRect();
-    const viewportCenter = window.innerHeight * 0.55;
-    const rooms = corridor.querySelectorAll('.room');
+    const viewportCenter = window.innerHeight * 0.62;
     const fills = corridor.querySelectorAll('.rail-fill');
-    if(rooms.length === 0) return;
 
-    const lastRoomNum = rooms[rooms.length - 1].querySelector('.room-num');
-    const lastMarkerRect = lastRoomNum.getBoundingClientRect();
-    const lastMarkerY = (lastMarkerRect.top + lastMarkerRect.bottom) / 2 - rect.top;
-
+    // Fill tracks scroll progress across the FULL height of the corridor (top to
+    // bottom of the rail), not just up to the last numbered room. This keeps the
+    // same continuous fill-as-you-scroll behavior all the way through any trailing
+    // sublists/lists below the last room marker, instead of freezing once the last
+    // room number has been passed.
+    const totalHeight = rect.height;
     const progressPx = viewportCenter - rect.top;
-    const pct = lastMarkerY !== 0 ? Math.max(0, Math.min(100, (progressPx / lastMarkerY) * 100)) : 0;
-    fills.forEach(f => f.style.height = pct + '%');
+    const pct = totalHeight !== 0 ? Math.max(0, Math.min(100, (progressPx / totalHeight) * 100)) : 0;
+    const fillHeightPx = (pct / 100) * totalHeight;
+    fills.forEach(f => f.style.height = fillHeightPx + 'px');
 
-    rooms.forEach(room => {
-      const r = room.getBoundingClientRect();
-      const roomCenter = r.top + r.height * 0.35;
-      if (roomCenter < viewportCenter + 40) {
-        room.classList.add('in-view');
-      } else {
-        room.classList.remove('in-view');
-      }
+    const branches = corridor.querySelectorAll('.branch-tick');
+    branches.forEach(branch => {
+      const r = branch.getBoundingClientRect();
+      const branchOffsetPx = (r.top + r.height / 2) - rect.top;
+      branch.classList.toggle('passed', branchOffsetPx <= fillHeightPx);
     });
 
-    const sublists = corridor.querySelectorAll('.sublist-wrap');
-    sublists.forEach(sub => {
-      const r = sub.getBoundingClientRect();
-      const subCenter = r.top + r.height * 0.35;
-      if (subCenter < viewportCenter + 40) {
-        sub.classList.add('in-view');
-      } else {
-        sub.classList.remove('in-view');
-      }
-    });
-
-    const listBlocks = corridor.querySelectorAll('.list-block');
-    listBlocks.forEach(block => {
-      const r = block.getBoundingClientRect();
-      const blockCenter = r.top + r.height * 0.35;
-      if (blockCenter < viewportCenter + 40) {
-        block.classList.add('in-view');
-      } else {
-        block.classList.remove('in-view');
-      }
+    const markers = corridor.querySelectorAll('.room .tick');
+    markers.forEach(tick => {
+      const r = tick.getBoundingClientRect();
+      const tickOffsetPx = (r.top + r.bottom) / 2 - rect.top;
+      tick.classList.toggle('passed', tickOffsetPx <= fillHeightPx);
     });
   }
 
