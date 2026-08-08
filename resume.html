@@ -227,8 +227,8 @@
   .rail-fill.rail-right{right:64px;}
 
   .room{position:relative;width:56%;padding:3.4rem 0;z-index:3;}
-  .room.left{text-align:left;padding-left:2.4rem;}
-  .room.right{text-align:right;padding-right:2.4rem;margin-left:44%;}
+  .room.left{text-align:left;padding-left:2.4rem;padding-right:2.4rem;}
+  .room.right{text-align:right;padding-right:2.4rem;padding-left:2.4rem;margin-left:44%;}
 
   .room-num{
     position:absolute;top:3.4rem;width:20px;height:20px;
@@ -321,14 +321,56 @@
   .room.in-view p.desc{color:var(--mute);}
   .room.in-view .marks{color:var(--cobalt);}
 
+  .sublist-wrap{
+    position:relative;z-index:3;margin:0 0 3.6rem;
+    padding:0.4rem 2.4rem 0 2.4rem;
+    opacity:0.35;
+    transition:opacity 0.7s ease;
+  }
+  .sublist-wrap.in-view{ opacity:1; }
+  .sublist-wrap:last-of-type{margin-bottom:0;}
+  .sublist-label{
+    font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--accent);text-align:left;margin-bottom:1.1rem;
+  }
+  .sublist-row{margin-bottom:1.1rem;}
+  .sublist-row:last-child{margin-bottom:0;}
+  .sublist-head{display:flex;justify-content:space-between;align-items:baseline;gap:1.2rem;flex-wrap:wrap;}
+  .sublist-title{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--cobalt-deep);}
+  .sublist-date{font-family:'Space Mono',monospace;font-size:0.64rem;color:var(--mute);white-space:nowrap;}
+  .sublist-desc{
+    font-family:'Space Mono',monospace;font-size:0.7rem;line-height:1.6;
+    color:var(--mute);margin-top:0.3rem;
+  }
+  .sublist-marks{
+    font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--cobalt);margin-top:0.5rem;
+  }
+
   .section-divider{
     max-width:1180px;margin:0 auto;padding:0 3.4rem;position:relative;z-index:3;
   }
   .section-divider .rule{
     height:1px;background:linear-gradient(90deg, transparent, var(--line-soft) 15%, var(--line-soft) 85%, transparent);
   }
+  .uni-divider{
+    height:1px;margin:0 2.4rem 3rem;
+    background:linear-gradient(90deg, var(--line-soft) 0%, var(--line-soft) 60%, transparent 100%);
+  }
+  .uni-divider-inner{
+    margin:0 2.4rem 1.2rem;opacity:0.6;
+  }
 
-  .list-block{max-width:820px;margin:0 auto;padding:1.2rem 2rem 5rem;position:relative;z-index:3;}
+  .list-block{max-width:1180px;margin:0 auto;padding:1.2rem 5.2rem 5rem;position:relative;z-index:3;}
+  /* list-block nested inside a corridor (e.g. Scholarships & Awards) already sits inside
+     the corridor's own padding, so align it flush with the rooms instead of re-padding */
+  .corridor .list-block{max-width:none;margin:0;padding-left:2.4rem;padding-right:2.4rem;opacity:0.35;transition:opacity 0.7s ease;}
+  .corridor .list-block.in-view{opacity:1;}
+  .corridor .list-block .sublist-label{margin-bottom:0.6rem;}
+  .corridor .list-block .list-row{
+    padding:0.35rem 0;border-bottom-style:dashed;
+  }
+  .corridor .list-block .list-row:first-child{border-top-style:dashed;}
   .list-row{
     display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;
     padding:0.9rem 0;border-bottom:1px solid var(--line-soft);
@@ -343,12 +385,58 @@
   }
   .skill-tags{display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;}
 
+  .list-block-compact .list-title{font-size:0.78rem;}
+  .list-block-compact .list-date{font-size:0.6rem;}
+
   .list-title a:hover{ color:var(--accent); border-color:var(--accent); }
   .skill-tag{
     font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;
     color:var(--cobalt);border:1px solid var(--line-soft);border-radius:2px;
     padding:0.45rem 0.9rem;background:var(--wash);
   }
+
+  /* Compact detailed list rows (Aesthetics & Community, Computer Science Experience) */
+  .list-row-detailed{
+    padding:1rem 0;border-bottom:1px solid var(--line-soft);
+  }
+  .list-row-detailed:first-child{border-top:1px solid var(--line-soft);}
+  .list-row-head{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;
+    flex-wrap:wrap;
+  }
+  .list-row-head .list-title{
+    font-family:'Fraunces',serif;font-size:0.94rem;color:var(--cobalt-deep);font-weight:400;
+  }
+  .list-row-head .list-role{
+    font-family:'Space Mono',monospace;font-size:0.66rem;color:var(--accent);
+    letter-spacing:0.04em;margin-left:0.6em;
+  }
+  .list-row-head .list-date{
+    font-family:'Space Mono',monospace;font-size:0.66rem;color:var(--mute);letter-spacing:0.04em;
+    white-space:nowrap;
+  }
+  .list-row-eyebrow{
+    font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--mute);opacity:0.7;margin-top:0.2rem;
+  }
+  .list-row-desc{
+    font-family:'Space Mono',monospace;font-weight:400;font-size:0.74rem;line-height:1.7;
+    color:var(--mute);margin-top:0.4rem;max-width:640px;
+  }
+  .list-row-marks{
+    font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--cobalt);margin-top:0.5rem;
+  }
+
+  /* Compact single-rail corridor (one column, tighter vertical rhythm) */
+  .corridor-single{ padding-bottom:3rem; }
+  .corridor-single .room{ width:100%; }
+  .corridor-single .room p.desc{ max-width:none; }
+  .room-compact{ padding:1.6rem 0; }
+  .room-compact .room-num{ top:1.6rem; }
+  .room-compact .tick{ top:calc(1.6rem + 9px); }
+  .room-compact .marks{ margin-top:0.6rem; }
+  .room-compact p.desc{ max-width:680px; }
 
   footer{
     text-align:center;padding:2.6rem;position:relative;z-index:3;
@@ -357,6 +445,7 @@
 
   @media (max-width:900px){
     .corridor{padding:1.2rem 3.2rem 5rem;}
+    .list-block{padding-left:3.2rem;padding-right:3.2rem;}
     .rail.rail-left{left:32px;}
     .rail.rail-right{right:32px;}
     .rail-fill.rail-left{left:32px;}
@@ -367,23 +456,33 @@
     .entrance{padding-left:1.4rem;padding-right:1.4rem;}
     h1.display{font-size:2rem;}
     .corridor{padding:1.2rem 2.2rem 4rem;}
+    .list-block{padding-left:2.2rem;padding-right:2.2rem;}
     .rail.rail-left{left:16px;}
     .rail-fill.rail-left{left:16px;}
     .room{width:100%;}
-    .room.left, .room.right{text-align:left;padding-left:2rem;padding-right:0;}
+    .room.left, .room.right{text-align:left;padding-left:2rem;padding-right:2rem;}
+    .corridor .list-block{padding-left:2rem;padding-right:2rem;}
     .room.right{margin-left:0;}
     .room.right p.desc, .room.right .marks{margin-left:0;}
     .room.left .room-num, .room.right .room-num{left:-10px;right:auto;}
     .room.left .tick, .room.right .tick{left:-1.2rem;right:auto;width:1.2rem;}
     .rail.rail-right, .rail-fill.rail-right{display:none;}
     .list-row{flex-direction:column;gap:0.2rem;}
+    .list-row-head{flex-direction:column;gap:0.2rem;}
+    .sublist-wrap{padding-left:2rem;padding-right:2rem;}
+    .uni-divider{margin-left:2rem;margin-right:2rem;}
+    .sublist-head{flex-direction:column;gap:0.15rem;}
   }
 
   @media (max-width:480px){
     .corridor{padding:1.2rem 29.2px 3.5rem;}
+    .list-block{padding-left:29.2px;padding-right:29.2px;}
     .rail.rail-left{left:10px;}
     .rail-fill.rail-left{left:10px;}
-    .room{padding-left:1.6rem;}
+    .room{padding-left:1.6rem;padding-right:1.6rem;}
+    .corridor .list-block{padding-left:1.6rem;padding-right:1.6rem;}
+    .sublist-wrap{padding-left:1.6rem;padding-right:1.6rem;}
+    .uni-divider{margin-left:1.6rem;margin-right:1.6rem;}
   }
 </style>
 </head>
@@ -478,14 +577,14 @@
 </div>
 <div class="collapsible-body open" id="body-writing">
 <div class="collapsible-inner">
-<div class="list-block" style="padding-bottom:1rem;">
+<div class="list-block list-block-compact" style="padding-bottom:1rem;">
   <div class="list-row">
     <span class="list-title"><a href="https://cjai.co.uk/usersubpost/https-cjai-co-uk-usersubpost-the-burden-of-choice-in-the-age-of-hypernudging-rethinking-autonomy-in-recommendation-systems/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid var(--line-soft);">"Choice in the Context of Hypernudging"</a> — Cambridge Journal of AI (CJAI)</span>
-    <span class="list-date">2026</span>
+    <span class="list-date">2024</span>
   </div>
   <div class="list-row">
     <span class="list-title">"Against a Strict Ordering of Mathematical Aesthetics"</span>
-    <span class="list-date"></span>
+    <span class="list-date">Forthcoming</span>
   </div>
 </div>
 </div>
@@ -499,15 +598,15 @@
 </div>
 
 
-<!-- ============ EDUCATION ============ -->
+<!-- ============ EDUCATION & RESEARCH ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
   <button class="section-toggle" data-target="body-education" aria-expanded="false">
-    <span class="chevron"></span> — EDUCATION —
+    <span class="chevron"></span> — EDUCATION & RESEARCH —
   </button>
 </div>
 <div class="collapsible-body" id="body-education">
 <div class="collapsible-inner">
-<div class="corridor" id="corridor1">
+<div class="corridor corridor-single" id="corridor1">
   <div class="rail rail-left"></div>
   <div class="rail rail-right"></div>
   <div class="rail-fill rail-left" data-fill></div>
@@ -519,13 +618,35 @@
       <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
       <span>I</span>
     </div>
+    <div class="eyebrow">[Master's]</div>
     <h2>Cambridge University</h2>
         <div class="eyebrow">Lucy Cavendish College, May 2026</div>
 
-    <p class="desc">Master's in AI Ethics and Society</p>
-    <p class="desc">Specializing in epistemic and aesthetic theory. </p>
+    <p class="desc">Master's in AI Ethics and Society, specializing in epistemic and aesthetic theory.</p>
     <div class="marks">Aesthetic Theory · Autonomy · Epistemic Injustice</div>
   </div>
+
+  <div class="uni-divider uni-divider-inner"></div>
+
+  <div class="sublist-wrap">
+    <div class="sublist-label">Research</div>
+    <div class="sublist-row">
+      <div class="sublist-head">
+        <span class="sublist-title">Epistemic Theory — Thesis Project</span>
+        <span class="sublist-date">Dec 2024 – Sept 2025</span>
+      </div>
+      <p class="sublist-desc">Identified and assessed AI tools in endometriosis care from a patient-centered perspective, through the lens of epistemic justice. Supervised by Professor Amy Gaeta.</p>
+    </div>
+    <div class="sublist-row">
+      <div class="sublist-head">
+        <span class="sublist-title">Autonomy — Graduate Research</span>
+        <span class="sublist-date">Lent Term 2024</span>
+      </div>
+      <p class="sublist-desc">Researched how hypernudging and algorithmic recommendation systems shape autonomy and choice, work that developed into the essay "Choice in the Context of Hypernudging." Supervised by Professor Milena Ivanova.</p>
+    </div>
+  </div>
+
+  <!-- <div class="uni-divider"></div> -->
 
   <div class="room left" id="room1b">
     <div class="tick"></div>
@@ -533,85 +654,38 @@
       <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
       <span>II</span>
     </div>
+    <div class="eyebrow">[Bachelor's]</div>
     <h2>University of Toronto</h2>
         <div class="eyebrow">St. Michael's College, November 2023</div>
 
-    <p class="desc">Bachelor's with a double major in Computer Science and Mathematics <br>GPA: 3.83/4.0</p>
+    <p class="desc">Bachelor's with a double major in Computer Science and Mathematics, GPA: 3.83/4.0</p>
     <div class="marks">Linear Algebra · Complex Analysis · Data Structures</div>
   </div>
-</div>
-</div>
-</div>
 
+  <div class="uni-divider uni-divider-inner"></div>
 
-
-<!-- ============ RESEARCH EXPERIENCE ============ -->
-<div class="entrance" style="padding:0.4rem 2rem;">
-  <button class="section-toggle" data-target="body-research" aria-expanded="false">
-    <span class="chevron"></span> — DIGITAL HUMANITIES RESEARCH —
-  </button>
-</div>
-<div class="collapsible-body" id="body-research">
-<div class="collapsible-inner">
-<div class="corridor" id="corridor-research">
-  <div class="rail rail-left"></div>
-  <div class="rail rail-right"></div>
-  <div class="rail-fill rail-left" data-fill></div>
-  <div class="rail-fill rail-right" data-fill></div>
-
-    <div class="room left" id="room-research3">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>I</span>
+  <div class="sublist-wrap">
+    <div class="sublist-label">Research</div>
+    <div class="sublist-row">
+      <div class="sublist-head">
+        <span class="sublist-title">Comparative Literature — Research Assistant</span>
+        <span class="sublist-date">May 2021 – Sept 2021</span>
+      </div>
+      <p class="sublist-desc">Awarded the Scholar in Residence scholarship to research how meaning shifts across translations and cultural contexts. Transliterated the Newar Buddhist text <em>Lalitāvistara</em> under Professor Christoph Emmrich's supervision.</p>
     </div>
-    <div class="eyebrow">Epistemic Theory</div>
-    <h2>Cambridge University</h2>
-    <div class="role">Dec 2024 – Sept 2025</div>
-    <p class="desc">Identified and assessed AI tools in endometriosis care from a patient-centered perspective, through the lens of epistemic justice. Supervised by Professor Amy Gaeta.</p>
-    <div class="marks">AI · Epistemic Injustice · Patient-Centered Design</div>
+    <div class="sublist-row">
+      <div class="sublist-head">
+        <span class="sublist-title">Educational Technology — Research Assistant</span>
+        <span class="sublist-date">May 2018 – Sept 2018</span>
+      </div>
+      <p class="sublist-desc">Developed video game software to make STEM subjects more engaging for students, using C# and Unity, under Professor Steve Engels.</p>
+    </div>
   </div>
 
-    <div class="room left" id="room-research2">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>II</span>
-    </div>
-    <div class="eyebrow">Comparative Literature</div>
-    <h2>University of Toronto</h2>
-    <div class="role">Research Assistant, May 2021 – Sept 2021</div>
-    <p class="desc">Awarded the Scholar in Residence scholarship to research how meaning shifts across translations and cultural contexts. 
-      Transliterated the Newar Buddhist text <em>Lalitāvistara</em> under Professor Christoph Emmrich's supervision.</p>
-    <div class="marks">Sanskrit · Meaning & Translation · Research Methodology</div>
-  </div>
+  <div class="uni-divider"></div>
 
-
-      <div class="room left" id="room-research1">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>III</span>
-    </div>
-    <div class="eyebrow">Educational Technology</div>
-    <h2>University of Toronto</h2>
-    <div class="role">Research Assistant, May 2018 – Sept 2018</div>
-    <p class="desc">Developed video game software to make STEM subjects more engaging for students, using C# and Unity, under Professor Steve Engels.</p>
-    <div class="marks">C# · Unity · Educational Software</div>
-  </div>
-</div>
-</div>
-</div>
-
-<!-- ============ SCHOLARSHIPS & AWARDS ============ -->
-<div class="entrance" style="padding:0.4rem 2rem;">
-  <button class="section-toggle" data-target="body-scholarships" aria-expanded="false">
-    <span class="chevron"></span> — SCHOLARSHIPS & AWARDS —
-  </button>
-</div>
-<div class="collapsible-body" id="body-scholarships">
-<div class="collapsible-inner">
-<div class="list-block">
+<div class="list-block list-block-compact" style="margin-top:-2.2rem;padding-top:0.4rem;padding-bottom:0;position:relative;z-index:3;">
+  <div class="sublist-label">Scholarships & Awards</div>
   <div class="list-row">
     <span class="list-title">St. Michael's College Silver Medal for Outstanding Academic Performance</span>
     <span class="list-date">Nov 2023</span>
@@ -635,26 +709,55 @@
 </div>
 </div>
 </div>
+</div>
+
+
 
 <!-- ============ PROFESSIONAL EXPERIENCE IN TECHNOLOGY ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
   <button class="section-toggle" data-target="body-professional" aria-expanded="false">
-    <span class="chevron"></span> — APPLIED TECHNOLOGY —
+    <span class="chevron"></span> — COMPUTER SCIENCE EXPERIENCE —
   </button>
 </div>
 <div class="collapsible-body" id="body-professional">
 <div class="collapsible-inner">
-<div class="corridor tech-voice" id="corridor-professional">
+<div class="corridor corridor-single tech-voice" id="corridor-professional">
   <div class="rail rail-left"></div>
   <div class="rail rail-right"></div>
   <div class="rail-fill rail-left" data-fill></div>
   <div class="rail-fill rail-right" data-fill></div>
 
-  <div class="room left" id="room-pro1">
+  <div class="room left room-compact lead-voice" id="room-pro1">
     <div class="tick"></div>
     <div class="room-num">
       <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
       <span>I</span>
+    </div>
+    <div class="eyebrow">Education</div>
+    <h2>Introduction to AI Agents</h2>
+    <div class="role">Teaching Assistant, June 2026 – Present</div>
+    <p class="desc">Teaching assistant for the Introduction to AI Agents course for university students and working professionals in Gaza; with the organization SPOCS for Gaza.</p>
+    <div class="marks">Artificial Intelligence · Machine Learning · Education</div>
+  </div>
+
+  <div class="room left room-compact lead-voice" id="room-pro2">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>II</span>
+    </div>
+    <div class="eyebrow">Non-Profit</div>
+    <h2>The Origin Lab</h2>
+    <div class="role">Technical Co-Founder, Nov 2024 – Present</div>
+    <p class="desc">Technical Co-Founder of a non-profit organization focused on community-driven initiatives and ethical AI and data practices. Partners include the World Health Organization, Women on Web, Evidara, and more.</p>
+    <div class="marks">Non-Profit Management · Community Engagement · Ethical AI</div>
+  </div>
+
+  <div class="room left room-compact" id="room-pro3">
+    <div class="tick"></div>
+    <div class="room-num">
+      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
+      <span>III</span>
     </div>
     <div class="eyebrow">Fintech</div>
     <h2>Scotiabank</h2>
@@ -663,60 +766,57 @@
     <div class="marks">Data Pipelines · Python · Financial Services</div>
   </div>
 
-  <div class="room left" id="room-pro2">
+  <div class="room left room-compact" id="room-pro4">
     <div class="tick"></div>
     <div class="room-num">
       <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>II</span>
+      <span>IV</span>
     </div>
     <div class="eyebrow">Software</div>
     <h2>SOTI</h2>
     <div class="role">Software Engineer, May 2019 – May 2020</div>
     <p class="desc">Shipped new features on the SOTI Assist platform using Angular, working cross-functionally with product and QA. Built back-end services in .NET and refactored legacy code to improve performance.</p>
-    <div class="marks">Full Stack  · .NET · Software Development</div>
+    <div class="marks">Full Stack · .NET · Software Development</div>
   </div>
 </div>
 </div>
 </div>
 
-<!-- ============ LEADERSHIP EXPERIENCE ============ -->
+<!-- ============ AESTHETICS & COMMUNITY ============ -->
 <div class="entrance" style="padding:0.4rem 2rem;">
   <button class="section-toggle" data-target="body-tech" aria-expanded="false">
-    <span class="chevron"></span> — LEADERSHIP & COMMUNITY —
+    <span class="chevron"></span> — AESTHETICS & COMMUNITY —
   </button>
 </div>
 <div class="collapsible-body" id="body-tech">
 <div class="collapsible-inner">
-<div class="corridor" id="corridor2">
-  <div class="rail rail-left"></div>
-  <div class="rail rail-right"></div>
-  <div class="rail-fill rail-left" data-fill></div>
-  <div class="rail-fill rail-right" data-fill></div>
+<div class="list-block" style="padding-bottom:4rem;">
 
-    <div class="room right lead-voice" id="room-pro3">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>I</span>
+  <div class="list-row-detailed">
+    <div class="list-row-head">
+      <span class="list-title">Gardiner Museum <span class="list-role">Gallery Educator</span></span>
+      <span class="list-date">May 2026 – Present</span>
     </div>
-    <div class="eyebrow">Non-Profit</div>
-    <h2>The Origin Lab</h2>
-    <div class="role">Co-Founder, Nov 2024 – Present</div>
-    <p class="desc">Non-profit organization focused on community-driven initiatives and ethical AI and data practices. Partners include the World Health Organization, Women on Web, Evidara, and more.</p>
-    <div class="marks">Non-Profit Management · Community Engagement · Ethical AI</div>
+    <div class="list-row-eyebrow">Ceramics Museum</div>
+    <p class="list-row-desc">Gallery Educator specializing in the political and cultural significance of porcelain in Kakeimon, 18th century French, and Contemporary contexts.</p>
   </div>
-  
-  <div class="room right lead-voice" id="room3">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>II</span>
+
+  <div class="list-row-detailed">
+    <div class="list-row-head">
+      <span class="list-title">Outside Berlin <span class="list-role">Editor</span></span>
+      <span class="list-date">Feb 2026 – Present</span>
     </div>
-    <div class="eyebrow">Education</div>
-    <h2>Introduction to AI Agents</h2>
-    <div class="role">Teaching Assistant, June 2026 – Present</div>
-    <p class="desc">Teaching assistant for the Introduction to AI Agents course for university students and working professionals in Gaza; with the organization SPOCS for Gaza.</p>
-    <div class="marks">Artificial Intelligence · Machine Learning · Education</div>
+    <div class="list-row-eyebrow">Magazine Editing</div>
+    <p class="list-row-desc">Copyeditor for the monthly fashion magazine Outside Berlin, which offers a philosophical, political, and historical exploration of contemporary fashion subject matter.</p>
+  </div>
+
+  <div class="list-row-detailed">
+    <div class="list-row-head">
+      <span class="list-title">UofT CSSU <span class="list-role">Artist</span></span>
+      <span class="list-date">2018 - 2019</span>
+    </div>
+    <div class="list-row-eyebrow">Creative Coding</div>
+    <p class="list-row-desc">Code artist for the CSSU Yearbook, creating expressionist visuals with p5.js and trigonometric equations.</p>
   </div>
 
 </div>
@@ -726,7 +826,7 @@
 
 
 <!-- ============ AESTHETIC PRACTICE ============ -->
-<div class="entrance" style="padding:0.4rem 2rem;">
+<!-- <div class="entrance" style="padding:0.4rem 2rem;">
   <button class="section-toggle" data-target="body-art" aria-expanded="false">
     <span class="chevron"></span> — ART HISTORY & AESTHETIC PRACTICE —
   </button>
@@ -739,50 +839,12 @@
   <div class="rail-fill rail-left" data-fill></div>
   <div class="rail-fill rail-right" data-fill></div>
 
-  <div class="room right" id="room4">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>I</span>
-    </div>
-    <div class="eyebrow">Ceramics Museum</div>
-    <h2>Gardiner Museum</h2>
-    <div class="role">Gallery Educator, May 2026 – Present</div>
-    <p class="desc">Gallery Educator for the Gardiner Museum, with a specialization in the political and cultural significance of porcelain in Kakeimon, 18th century French, and Contemporary contexts.</p>
-    <div class="marks">Art History · Porcelain History · Art Education</div>
-  </div>
-
-    <div class="room right" id="room6">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>II</span>
-    </div>
-    <div class="eyebrow">Magazine Editing</div>
-    <h2>Outside Berlin</h2>
-    <div class="role">Editor, Feb 2026 – Present</div>
-    <p class="desc">Copyeditor for the monthly fashion magazine Outside Berlin which offers a philosophical, political, and historical exploration of contemporary fashion subject matter.</p>
-    <div class="marks">Fashion · Journalism · Editing</div>
-  </div>
-
-  <div class="room right" id="room7">
-    <div class="tick"></div>
-    <div class="room-num">
-      <svg class="room-num-svg" viewBox="0 0 20 20"><use href="#room-num-crackle"/></svg>
-      <span>III</span>
-    </div>
-    <div class="eyebrow">Creative Coding</div>
-    <h2>UofT CSSU</h2>
-    <div class="role">Artist, 2018</div>
-    <p class="desc">Code artist for the CSSU Yearbook, creating expressionist visuals with p5.js and trigonometric equations.</p>
-    <div class="marks">Creative Coding · Trigonometry · Expressionist Art</div>
-  </div>
 
 </div>
 </div>
 </div>
 
-
+ -->
 
 
 <!-- ============ ADDITIONAL SKILLS ============ -->
@@ -901,6 +963,28 @@
         room.classList.add('in-view');
       } else {
         room.classList.remove('in-view');
+      }
+    });
+
+    const sublists = corridor.querySelectorAll('.sublist-wrap');
+    sublists.forEach(sub => {
+      const r = sub.getBoundingClientRect();
+      const subCenter = r.top + r.height * 0.35;
+      if (subCenter < viewportCenter + 40) {
+        sub.classList.add('in-view');
+      } else {
+        sub.classList.remove('in-view');
+      }
+    });
+
+    const listBlocks = corridor.querySelectorAll('.list-block');
+    listBlocks.forEach(block => {
+      const r = block.getBoundingClientRect();
+      const blockCenter = r.top + r.height * 0.35;
+      if (blockCenter < viewportCenter + 40) {
+        block.classList.add('in-view');
+      } else {
+        block.classList.remove('in-view');
       }
     });
   }
